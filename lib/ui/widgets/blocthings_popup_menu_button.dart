@@ -36,7 +36,6 @@ class BlocThingsPopupMenuButton extends StatelessWidget {
         }
       },
       elevation: 3,
-      offset: Offset(0, 100),
       itemBuilder: (BuildContext context) => [
         PopupMenuItem(
           value: 0,

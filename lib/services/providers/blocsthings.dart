@@ -11,8 +11,17 @@ import '../../utils/enums/status.dart';
 
 class BlocsThings with ChangeNotifier {
   List<BlocThings> _items = [];
-  UnmodifiableListView<BlocThings> get items => UnmodifiableListView(_items);
-  final String _urlBase = "FIRE_BASE_URL";
+  // UnmodifiableListView<BlocThings> get items => UnmodifiableListView(_items);
+  List<BlocThings> get items {
+    return _items;
+  }
+
+  final String _urlBase =
+      "https://day-by-day-a92fe-default-rtdb.firebaseio.com/";
+  final String authToken;
+  final String userId;
+
+  BlocsThings(this.authToken, this.userId, this._items);
 
   BlocThings findById(String id) {
     return _items.firstWhere((blocThings) => blocThings.id == id);
@@ -21,21 +30,23 @@ class BlocsThings with ChangeNotifier {
   Future<void> fetchAndSetBlocsThings() async {
     try {
       final String url =
-          "${_urlBase}blocsthings.json";
+          '${_urlBase}blocsthings.json?auth=$authToken&orderBy="creatorId"&equalTo="$userId"';
       final http.Response response = await http.get(url);
       final Map<String, dynamic> dataBlocsThings =
           json.decode(response.body) as Map<String, dynamic>;
+          final List<BlocThings> loadedBlocsThings = [];
       if (dataBlocsThings != null) {
         dataBlocsThings.forEach((blocThingsId, blocThingsData) {
-          _items.add(new BlocThings(
+          loadedBlocsThings.add(new BlocThings(
             id: blocThingsId,
             title: blocThingsData['title'],
             checkedCount: blocThingsData['checkedCount'],
             state: Status.values.firstWhere((element) =>
                 element.toString().split('.')[1] == blocThingsData['state']),
-            things: List<Thing>(),
+            things: [],
           ));
         });
+        _items = loadedBlocsThings;
         notifyListeners();
       }
     } catch (error) {
@@ -46,8 +57,7 @@ class BlocsThings with ChangeNotifier {
 
   Future<void> addBlocThings(BlocThings createdBlocThings) async {
     try {
-      final String url =
-          "${_urlBase}blocsthings.json";
+      final String url = "${_urlBase}blocsthings.json?auth=$authToken";
       final http.Response response = await http.post(
         url,
         body: json.encode({
@@ -55,6 +65,7 @@ class BlocsThings with ChangeNotifier {
           'state': createdBlocThings.state.toString().split('.')[1],
           'checkedCount': createdBlocThings.checkedCount,
           'things': createdBlocThings.things,
+          'creatorId': userId,
         }),
       );
       final BlocThings addedBlocThings = new BlocThings(
@@ -76,8 +87,7 @@ class BlocsThings with ChangeNotifier {
   Future<void> updateBlocThings(BlocThings editedBlocThings) async {
     try {
       final String id = editedBlocThings.id;
-      final String url =
-          "${_urlBase}blocsthings/$id.json";
+      final String url = "${_urlBase}blocsthings/$id.json?auth=$authToken";
       await http.patch(url,
           body: json.encode({'title': editedBlocThings.title}));
       final int thingsIndex =
@@ -93,7 +103,7 @@ class BlocsThings with ChangeNotifier {
   Future<void> deleteBlocThings(String blocThingsId) async {
     try {
       final String url =
-          "${_urlBase}blocsthings/$blocThingsId.json";
+          "${_urlBase}blocsthings/$blocThingsId.json?auth=$authToken";
       await http.delete(url);
       final int thingsToRemoveIndex =
           _items.indexWhere((element) => element.id == blocThingsId);
@@ -110,7 +120,7 @@ class BlocsThings with ChangeNotifier {
       String blocThingsId, Thing createdThing) async {
     try {
       String url =
-          "${_urlBase}blocsthings/$blocThingsId/things.json";
+          "${_urlBase}blocsthings/$blocThingsId/things.json?auth=$authToken";
       if (blocThingsId.isNotEmpty) {
         await http.post(url,
             body: json
@@ -128,8 +138,7 @@ class BlocsThings with ChangeNotifier {
 
   Future<void> updateBlocThingsCheckedCount(String blocThingsId) async {
     try {
-      String url =
-          "${_urlBase}blocsthings/$blocThingsId.json";
+      String url = "${_urlBase}blocsthings/$blocThingsId.json?auth=$authToken";
       final thingsIndex =
           _items.indexWhere((element) => element.id == blocThingsId);
       final int checkedCount = _items[thingsIndex]
@@ -156,7 +165,7 @@ class BlocsThings with ChangeNotifier {
       final int blocThingsIndex =
           _items.indexWhere((element) => element.id == blocThingsId);
       final String url =
-          "${_urlBase}blocsthings/$blocThingsId/things/$thingId.json";
+          "${_urlBase}blocsthings/$blocThingsId/things/$thingId.json?auth=$authToken";
       await http.delete(url);
       _items[blocThingsIndex]
           .things

@@ -42,6 +42,10 @@ class DayByDayRessources {
   static const textRessourceConfirmDeleteThingTitle = "Supprimer la tâche ?";
 
   static const textRessourceOk = "Ok";
-  static const textRessourceAlertDialogTitleErrorMessage = "Une erreur s\'est produite!";
-   static const textRessourceAlertDialogContentErrorMessage = "L\'enregistrement ne s\'est pas éffectuée";
+  static const textRessourceAlertDialogTitleErrorMessage =
+      "Une erreur s\'est produite!";
+  static const textRessourceAlertDialogContentErrorMessage =
+      "L\'enregistrement ne s\'est pas éffectuée";
+
+      static const textTitleAuthScreen = "Day by Day";
 }

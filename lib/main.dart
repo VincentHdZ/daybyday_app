@@ -8,10 +8,13 @@ import 'models/blocthings.dart';
 
 import 'services/providers/things.dart';
 import 'services/providers/blocsthings.dart';
+import 'services/providers/auth.dart';
 
 import 'ui/pages/blocthings_details_page.dart';
-import 'ui/pages/blocthings_overview_page.dart';
 import 'ui/pages/thing_details_page.dart';
+import 'ui/pages/auth_page.dart';
+import 'ui/pages/blocthings_overview_page.dart';
+import 'ui/pages/splash_screen.dart';
 
 import 'utils/daybyday_theme_app.dart';
 import 'utils/daybyday_resources.dart';
@@ -24,33 +27,53 @@ class DayByDayApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => BlocsThings(),
+          create: (ctx) => Auth(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Things(),
+        ChangeNotifierProxyProvider<Auth, BlocsThings>(
+          create: null,
+          update: (ctx, auth, previousBlocsThings) => BlocsThings(
+              auth.token,
+              auth.userId,
+              previousBlocsThings == null ? [] : previousBlocsThings.items),
+        ),
+        ChangeNotifierProxyProvider<Auth, Things>(
+          create: (ctx) => null,
+          update: (ctx, auth, previousThings) => Things(auth.token, auth.userId,
+              previousThings == null ? [] : previousThings.items),
         ),
         ChangeNotifierProvider(
           create: (ctx) => BlocThings(),
         ),
-                ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (ctx) => Thing(),
         ),
       ],
       child: ScreenUtilInit(
         // Iphone 11 1792 * 828
         designSize: Size(828, 1792),
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: DayByDayRessources.textRessourceTitleApp,
-          localizationsDelegates: [GlobalMaterialLocalizations.delegate],
-          supportedLocales: [const Locale('en'), const Locale('fr')],
-          routes: {
-            "/": (context) => BlocThingsOverviewPage(),
-            BlocThingsDetailsPage.routeName: (context) => BlocThingsDetailsPage(),
-            ThingDetailsPage.routeName: (context) => ThingDetailsPage(),
-          },
-          theme: DayByDayAppTheme.appTheme,
-        ),
+        child: Consumer<Auth>(builder: (ctx, auth, _) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: DayByDayRessources.textRessourceTitleApp,
+            localizationsDelegates: [GlobalMaterialLocalizations.delegate],
+            supportedLocales: [const Locale('en'), const Locale('fr')],
+            home: auth.isAuth
+                ? BlocThingsOverviewPage()
+                : FutureBuilder(
+                    future: auth.tryAutoLogin(),
+                    builder: (context, authResultSnapshot) =>
+                        authResultSnapshot.connectionState ==
+                                ConnectionState.waiting
+                            ? SplashScreen()
+                            : AuthPage()),
+            routes: {
+              BlocThingsDetailsPage.routeName: (ctx) => BlocThingsDetailsPage(),
+              ThingDetailsPage.routeName: (ctx) => ThingDetailsPage(),
+              AuthPage.routeName: (ctx) => AuthPage(),
+            },
+            theme: DayByDayAppTheme.appTheme,
+          );
+        }),
       ),
     );
   }

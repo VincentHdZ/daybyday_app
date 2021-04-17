@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../services/providers/blocsthings.dart';
 import '../../services/providers/things.dart';
+import '../../services/providers/auth.dart';
 
 import '../../models/blocthings.dart';
 
@@ -41,9 +42,33 @@ class _BlocThingsOverviewPageState extends State<BlocThingsOverviewPage> {
         title: Text(
           DayByDayRessources.textRessourceTitleThingsAppBar,
         ),
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.logout,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed('/');
+                Provider.of<Auth>(context, listen: false).logout();
+              }),
+        ],
       ),
       body: _getBodyContent(blocThings.length),
       floatingActionButton: _getFloatingActionButton(),
+    );
+  }
+
+  Widget _buttonLogout() {
+    return Builder(
+      builder: (BuildContext context) {
+        return IconButton(
+            icon: Icon(
+              Icons.logout,
+            ),
+            onPressed: () {
+              Provider.of<Auth>(context, listen: false).logout();
+            });
+      },
     );
   }
 
