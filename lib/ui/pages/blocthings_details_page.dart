@@ -52,9 +52,6 @@ class _BlocThingsDetailsPageState extends State<BlocThingsDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_blocThingsTitleAppBar),
-        leading: BackButton(
-          color: DayByDayAppTheme.accentColor,
-        ),
         actions: [
           BlocThingsPopupMenuButton(
               _selectedBlocThings, _setStatBlocThingsTitleAppBar),

@@ -46,13 +46,11 @@ class BlocThingsPopupMenuButton extends StatelessWidget {
                 DayByDayRessources.textRessourcePopupMenuButtonRename,
                 style: TextStyle(
                   fontSize: 18,
-                  color: DayByDayAppTheme.accentColor,
                 ),
               ),
               Icon(
                 DayByDayRessources.iconRessoureRename,
                 size: 25,
-                color: DayByDayAppTheme.accentColor,
               ),
             ],
           ),
@@ -66,13 +64,11 @@ class BlocThingsPopupMenuButton extends StatelessWidget {
                 DayByDayRessources.textRessourcePopupMenuButtonRemove,
                 style: TextStyle(
                   fontSize: 18,
-                  color: DayByDayAppTheme.accentColor,
                 ),
               ),
               Icon(
                 DayByDayRessources.iconRessoureRemove,
                 size: 25,
-                color: DayByDayAppTheme.accentColor,
               ),
             ],
           ),
@@ -81,7 +77,6 @@ class BlocThingsPopupMenuButton extends StatelessWidget {
       icon: Icon(
         Icons.more_vert,
         size: 30,
-        color: DayByDayAppTheme.accentColor,
       ),
     );
   }
