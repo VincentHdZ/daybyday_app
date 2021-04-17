@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/blocthings.dart';
-import '../../models/thing.dart';
 
 import '../../services/providers/blocsthings.dart';
 
@@ -68,17 +67,20 @@ class _CreateBlocThingsModalBottomSheetState
                           backgroundColor: DayByDayAppTheme.accentColor,
                         ),
                       )
-                    : FlatButton(
-                        child: Text(
-                          DayByDayRessources.textRessourceSaveButton,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color.fromRGBO(0, 176, 255, 0.9),
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextButton(
+                          child: Text(
+                            DayByDayRessources.textRessourceSaveButton,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromRGBO(0, 176, 255, 0.9),
+                            ),
                           ),
+                          onPressed: () {
+                            _saveForm(context);
+                          },
                         ),
-                        onPressed: () {
-                          _saveForm(context);
-                        },
                       ),
               ],
             )
@@ -95,7 +97,7 @@ class _CreateBlocThingsModalBottomSheetState
         _formKey.currentState.save();
         BlocThings createdBlocThings = new BlocThings(
           title: _blocThingsTitleTextController.text,
-          things: new List<Thing>(),
+          things: [],
         );
         await Provider.of<BlocsThings>(context, listen: false)
             .addBlocThings(createdBlocThings);
@@ -103,13 +105,15 @@ class _CreateBlocThingsModalBottomSheetState
         await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: Text(DayByDayRessources
-                .textRessourceAlertDialogTitleErrorMessage),
-            content: Text(DayByDayRessources
-                .textRessourceAlertDialogContentErrorMessage),
+            title: Text(
+                DayByDayRessources.textRessourceAlertDialogTitleErrorMessage),
+            content: Text(
+                DayByDayRessources.textRessourceAlertDialogContentErrorMessage),
             actions: <Widget>[
-              FlatButton(
-                color: DayByDayAppTheme.accentColor,
+              TextButton(
+                style: TextButton.styleFrom(
+                  primary: DayByDayAppTheme.accentColor,
+                ),
                 child: Text(DayByDayRessources.textRessourceOk),
                 onPressed: () {
                   Navigator.of(ctx).pop();

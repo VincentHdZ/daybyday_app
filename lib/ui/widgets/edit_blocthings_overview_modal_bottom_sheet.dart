@@ -68,18 +68,21 @@ class _EditBlocThingsOverviewModalBottomSheetState
                           backgroundColor: DayByDayAppTheme.accentColor,
                         ),
                       )
-                    : FlatButton(
-                        child: Text(
-                          DayByDayRessources.textRessourceSaveButton,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color.fromRGBO(0, 176, 255, 0.9),
+                    : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextButton(
+                          child: Text(
+                            DayByDayRessources.textRessourceSaveButton,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromRGBO(0, 176, 255, 0.9),
+                            ),
                           ),
+                          onPressed: () {
+                            _saveForm();
+                          },
                         ),
-                        onPressed: () {
-                          _saveForm();
-                        },
-                      ),
+                    ),
               ],
             ),
           ],
@@ -102,22 +105,26 @@ class _EditBlocThingsOverviewModalBottomSheetState
         builder: (ctx) => AlertDialog(
           title: Text(
               DayByDayRessources.textRessourceAlertDialogTitleErrorMessage),
-          content: Text(DayByDayRessources
-              .textRessourceAlertDialogContentErrorMessage),
+          content: Text(
+              DayByDayRessources.textRessourceAlertDialogContentErrorMessage),
           actions: <Widget>[
-            FlatButton(
-              color: DayByDayAppTheme.accentColor,
-              child: Text(DayByDayRessources.textRessourceOk),
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: DayByDayAppTheme.accentColor,
+              ),
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
-            )
+              child: Text(DayByDayRessources.textRessourceOk),
+            ),
           ],
         ),
       );
     } finally {
-      _setStateCircularProgressIndicator(false);
-      Navigator.of(context).pop();
+      if (_isLoading) {
+        _setStateCircularProgressIndicator(false);
+        Navigator.of(context).pop();
+      }
     }
   }
 
