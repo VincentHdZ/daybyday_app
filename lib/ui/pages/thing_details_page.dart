@@ -35,7 +35,8 @@ class _ThingDetailsPageState extends State<ThingDetailsPage> {
   @override
   void didChangeDependencies() {
     if (_init) {
-      final String selectedThingId = ModalRoute.of(context).settings.arguments as String;
+      final String selectedThingId =
+          ModalRoute.of(context).settings.arguments as String;
       _selectedThing = Provider.of<Things>(context).findById(selectedThingId);
       _blocThings = Provider.of<BlocsThings>(context)
           .findById(_selectedThing.blocThingsId);
@@ -324,8 +325,10 @@ class _ThingDetailsPageState extends State<ThingDetailsPage> {
         ),
       );
     } finally {
-      _setStateCircularProgressIndicator(false);
-      Navigator.of(context).pop();
+      if (_isLoading) {
+        _setStateCircularProgressIndicator(false);
+        Navigator.of(context).pop();
+      }
     }
   }
 
