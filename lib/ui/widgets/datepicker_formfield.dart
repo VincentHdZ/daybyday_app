@@ -30,7 +30,7 @@ class _DatePickerFormFieldState
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        FlatButton(
+        TextButton(
           child: Icon(
             Icons.date_range,
             color: DayByDayAppTheme.accentColor,

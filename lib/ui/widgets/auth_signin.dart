@@ -235,8 +235,15 @@ class _AuthSignInState extends State<AuthSignIn> {
         title: Text('An Error Occurred!'),
         content: Text(message),
         actions: <Widget>[
-          FlatButton(
-            child: Text('Okay'),
+          TextButton(
+            child: Text(
+              'Okay',
+              style: TextStyle(
+                color: DayByDayAppTheme.accentColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             onPressed: () {
               Navigator.of(ctx).pop();
             },

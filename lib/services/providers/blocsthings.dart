@@ -74,7 +74,7 @@ class BlocsThings with ChangeNotifier {
         state: Status.values
             .firstWhere((element) => element == createdBlocThings.state),
         checkedCount: createdBlocThings.checkedCount,
-        things: new List<Thing>(),
+        things: [],
       );
       _items.add(addedBlocThings);
       notifyListeners();

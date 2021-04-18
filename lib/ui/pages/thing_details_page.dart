@@ -177,17 +177,20 @@ class _ThingDetailsPageState extends State<ThingDetailsPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        FlatButton(
-                          child: Text(
-                            DayByDayRessources.textRessourceSaveButton,
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Color.fromRGBO(0, 176, 255, 0.9),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextButton(
+                            child: Text(
+                              DayByDayRessources.textRessourceSaveButton,
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Color.fromRGBO(0, 176, 255, 0.9),
+                              ),
                             ),
+                            onPressed: () {
+                              _saveForm();
+                            },
                           ),
-                          onPressed: () {
-                            _saveForm();
-                          },
                         ),
                       ],
                     ),
@@ -308,8 +311,10 @@ class _ThingDetailsPageState extends State<ThingDetailsPage> {
           content: Text(
               DayByDayRessources.textRessourceAlertDialogContentErrorMessage),
           actions: <Widget>[
-            FlatButton(
-              color: DayByDayAppTheme.accentColor,
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: DayByDayAppTheme.accentColor,
+              ),
               child: Text(DayByDayRessources.textRessourceOk),
               onPressed: () {
                 Navigator.of(ctx).pop();
