@@ -30,207 +30,203 @@ class _AuthSignUpState extends State<AuthSignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(18.0),
-      child: Container(
-        height: 490,
-        width: double.infinity,
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  "Email",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+    return Container(
+      width: double.infinity,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                "Email",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: Colors.black),
-                cursorColor: Colors.grey,
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                    prefixIcon: Icon(
-                      Icons.mail,
-                      color: Colors.blue[300],
-                    ),
-                    hintText: "Your Email",
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0))),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "Please enter your email";
-                  }
-                  if (!_validateEmail(value)) {
-                    return "Invalid email";
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _authData['email'] = value;
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  "Password",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+            ),
+            TextFormField(
+              keyboardType: TextInputType.emailAddress,
+              style: TextStyle(color: Colors.black),
+              cursorColor: Colors.grey,
+              decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                  prefixIcon: Icon(
+                    Icons.mail,
+                    color: Colors.blue[300],
                   ),
+                  hintText: "Your Email",
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0))),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return "Please enter your email";
+                }
+                if (!_validateEmail(value)) {
+                  return "Invalid email";
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _authData['email'] = value;
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                "Password",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              TextFormField(
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                controller: _passwordController,
-                style: TextStyle(color: Colors.black),
-                cursorColor: Colors.grey,
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: Colors.blue[300],
-                    ),
-                    hintText: "Your Password",
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32.0),
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0))),
-                validator: (value) {
-                  if (value.isEmpty || value.length < 5) {
-                    return "Password to short";
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _authData['password'] = value;
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  "Confirm Password",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+            ),
+            TextFormField(
+              keyboardType: TextInputType.text,
+              obscureText: true,
+              controller: _passwordController,
+              style: TextStyle(color: Colors.black),
+              cursorColor: Colors.grey,
+              decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Colors.blue[300],
                   ),
+                  hintText: "Your Password",
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(32.0),
+                  ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32.0))),
+              validator: (value) {
+                if (value.isEmpty || value.length < 5) {
+                  return "Password to short";
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _authData['password'] = value;
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                "Confirm Password",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              TextFormField(
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                style: TextStyle(color: Colors.black),
-                cursorColor: Colors.grey,
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: Colors.blue[300],
-                    ),
-                    hintText: "Confirm Password",
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32.0),
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0))),
-                validator: (value) {
-                  if (value != _passwordController.text) {
-                    return "Passwords do not match";
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RaisedButton(
-                    elevation: 15,
-                    onPressed: () {
-                      _signUp();
-                    },
-                    padding: const EdgeInsets.only(
-                      left: 80.0,
-                      top: 10.0,
-                      right: 80.0,
-                      bottom: 10.0,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    color: Colors.white,
-                    splashColor: Colors.white,
-                    highlightColor: Colors.blue[50],
-                    child: _isLoading
-                        ? Padding(
-                            padding: EdgeInsets.only(right: 0, bottom: 0),
-                            child: CircularProgressIndicator(
-                              backgroundColor: DayByDayAppTheme.accentColor,
-                            ),
-                          )
-                        : Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 20,
-                            ),
+            ),
+            TextFormField(
+              keyboardType: TextInputType.text,
+              obscureText: true,
+              style: TextStyle(color: Colors.black),
+              cursorColor: Colors.grey,
+              decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Colors.blue[300],
+                  ),
+                  hintText: "Confirm Password",
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(32.0),
+                  ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(32.0))),
+              validator: (value) {
+                if (value != _passwordController.text) {
+                  return "Passwords do not match";
+                }
+                return null;
+              },
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RaisedButton(
+                  elevation: 15,
+                  onPressed: () {
+                    _signUp();
+                  },
+                  padding: const EdgeInsets.only(
+                    left: 80.0,
+                    top: 10.0,
+                    right: 80.0,
+                    bottom: 10.0,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32),
+                  ),
+                  color: Colors.white,
+                  splashColor: Colors.white,
+                  highlightColor: Colors.blue[50],
+                  child: _isLoading
+                      ? Padding(
+                          padding: EdgeInsets.only(right: 0, bottom: 0),
+                          child: CircularProgressIndicator(
+                            backgroundColor: DayByDayAppTheme.accentColor,
                           ),
+                        )
+                      : Text(
+                          "Sign Up",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 20,
+                          ),
+                        ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  "I have an account",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    "I have an account",
+                ),
+                GestureDetector(
+                  onTap: () {
+                    widget.setAuthMode();
+                  },
+                  child: Text(
+                    "Sign In",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      widget.setAuthMode();
-                    },
-                    child: Text(
-                      "Sign In",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
