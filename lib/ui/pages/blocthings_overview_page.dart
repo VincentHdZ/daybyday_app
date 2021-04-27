@@ -23,12 +23,20 @@ class BlocThingsOverviewPage extends StatefulWidget {
 
 class _BlocThingsOverviewPageState extends State<BlocThingsOverviewPage> {
   bool _isInit = true;
+  bool _isLoading = false;
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
       Provider.of<BlocsThings>(context).fetchAndSetBlocsThings();
-      Provider.of<Things>(context).fetchAndSetThings();
+      Provider.of<Things>(context).fetchAndSetThings().then((_) => {
+            setState(() {
+              _isLoading = false;
+            })
+          });
       _isInit = false;
     }
     super.didChangeDependencies();
@@ -53,7 +61,18 @@ class _BlocThingsOverviewPageState extends State<BlocThingsOverviewPage> {
               }),
         ],
       ),
-      body: _getBodyContent(blocThings.length),
+      body: _isLoading
+          ? Center(
+              child: Container(
+                height: 100,
+                width: 100,
+                child: CircularProgressIndicator(
+                  backgroundColor: DayByDayAppTheme.accentColor,
+                  strokeWidth: 10,
+                ),
+              ),
+            )
+          : _getBodyContent(blocThings),
       floatingActionButton: _getFloatingActionButton(),
     );
   }
@@ -72,11 +91,13 @@ class _BlocThingsOverviewPageState extends State<BlocThingsOverviewPage> {
     );
   }
 
-  Widget _getBodyContent(int blocThingsCount) {
-    if (blocThingsCount <= 0) {
-      return BlocsThingsImage();
-    } else {
-      return BlocThingsGridview(_showModalFormEditBlocThings);
+  Widget _getBodyContent(List<BlocThings> blocThings) {
+    if (blocThings != null) {
+      if (blocThings.length <= 0) {
+        return BlocsThingsImage();
+      } else {
+        return BlocThingsGridview(_showModalFormEditBlocThings);
+      }
     }
   }
 

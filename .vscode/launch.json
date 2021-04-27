@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "daybyday_app (Flutter)",
+            "program": "lib/main.dart",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}
