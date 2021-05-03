@@ -1,9 +1,11 @@
-import 'package:daybyday_app/ui/widgets/thing_listtile.dart';
-
-import '../../models/blocthings.dart';
-import 'package:daybyday_app/services/providers/things.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:daybyday_app/ui/widgets/thing_card.dart';
+
+import '../../models/blocthings.dart';
+
+import 'package:daybyday_app/services/providers/things.dart';
 
 class ThingListView extends StatelessWidget {
   final BlocThings _thingsList;
@@ -21,7 +23,7 @@ class ThingListView extends StatelessWidget {
         itemCount: things.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
           value: things[i],
-          child: ThingListTile(),
+          child: ThingCard(),
         ),
       ),
     );
