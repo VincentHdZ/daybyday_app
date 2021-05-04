@@ -84,8 +84,7 @@ class _CreateThingModalBottomSheetState
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Padding(
-        padding: MediaQuery.of(context).viewInsets,
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,

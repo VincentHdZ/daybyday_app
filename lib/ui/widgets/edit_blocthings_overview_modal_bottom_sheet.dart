@@ -26,8 +26,7 @@ class _EditBlocThingsOverviewModalBottomSheetState
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      child: Padding(
-        padding: MediaQuery.of(context).viewInsets,
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -69,8 +68,8 @@ class _EditBlocThingsOverviewModalBottomSheetState
                         ),
                       )
                     : Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextButton(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextButton(
                           child: Text(
                             DayByDayRessources.textRessourceSaveButton,
                             style: TextStyle(
@@ -82,7 +81,7 @@ class _EditBlocThingsOverviewModalBottomSheetState
                             _saveForm();
                           },
                         ),
-                    ),
+                      ),
               ],
             ),
           ],
