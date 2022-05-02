@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import 'models/thing.dart';
 import 'models/blocthings.dart';
@@ -51,7 +51,8 @@ class DayByDayApp extends StatelessWidget {
       child: ScreenUtilInit(
         // Iphone 11 1792 * 828
         designSize: Size(828, 1792),
-        child: Consumer<Auth>(builder: (ctx, auth, _) {
+        allowFontScaling: false,
+        builder: () => Consumer<Auth>(builder: (ctx, auth, _) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: DayByDayRessources.textRessourceTitleApp,
