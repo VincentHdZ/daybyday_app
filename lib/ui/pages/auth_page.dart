@@ -47,7 +47,8 @@ class _AuthPageState extends State<AuthPage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(18.0),
-              child: _signIn ? AuthSignIn(_setAuthMode) : AuthSignUp(_setAuthMode),
+              child:
+                  _signIn ? AuthSignIn(_setAuthMode) : AuthSignUp(_setAuthMode),
             ),
           ],
         ),

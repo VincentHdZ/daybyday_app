@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:daybyday_app/models/http_exception.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,8 +32,7 @@ class Auth with ChangeNotifier {
 
   Future<void> signup(String email, String password) async {
     try {
-      const url =
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDeRPNJuMRdI6Lc31MNsyBM4C69Qf6E5p0";
+      final String url = dotenv.env['SIGN_UP_WITH_PWD_END_POINT'];
       final response = await http.post(url,
           body: json.encode(
             {
@@ -42,6 +42,7 @@ class Auth with ChangeNotifier {
             },
           ));
       final responseData = json.decode(response.body);
+
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
       }
@@ -52,8 +53,7 @@ class Auth with ChangeNotifier {
 
   Future<void> signin(String email, String password) async {
     try {
-      const url =
-          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDeRPNJuMRdI6Lc31MNsyBM4C69Qf6E5p0";
+      final String url =dotenv.env['SIGN_IN_WITH_PWD_END_POINT'];
       final response = await http.post(url,
           body: json.encode({
             'email': email,
@@ -61,10 +61,12 @@ class Auth with ChangeNotifier {
             'returnSecureToken': true,
           }));
       final responseData = json.decode(response.body);
+
       if (responseData['error'] != null) {
         print("error - " + responseData['error']['message']);
         throw HttpException(responseData['error']['message']);
       }
+
       _token = responseData['idToken'];
       _userId = responseData['localId'];
       _expiryDate = DateTime.now().add(
@@ -72,14 +74,17 @@ class Auth with ChangeNotifier {
           seconds: int.parse(responseData['expiresIn']),
         ),
       );
+
       _autoLogout();
       notifyListeners();
+
       final prefs = await SharedPreferences.getInstance();
       final userData = json.encode({
         'token': _token,
         'userId': _userId,
         'expiryDate': _expiryDate.toIso8601String(),
       });
+
       prefs.setString('userData', userData);
     } catch (error) {
       throw error;

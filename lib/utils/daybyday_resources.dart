@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DayByDayRessources {
   static const textRessourceTitleApp = "Day By Day App";
@@ -47,5 +48,5 @@ class DayByDayRessources {
   static const textRessourceAlertDialogContentErrorMessage =
       "L\'enregistrement ne s\'est pas éffectuée";
 
-      static const textTitleAuthScreen = "Day by Day";
+  static final textTitleAuthScreen = dotenv.env['APP_NAME'];
 }
