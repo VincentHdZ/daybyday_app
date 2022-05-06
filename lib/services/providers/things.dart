@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,8 +15,7 @@ class Things with ChangeNotifier {
     return [..._items];
   }
 
-  final String _urlBase =
-      "https://day-by-day-a92fe-default-rtdb.firebaseio.com/";
+  final String _urlBase = dotenv.env['END_POINT'];
   final String authToken;
   final String userId;
 
