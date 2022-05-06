@@ -49,7 +49,9 @@ class _ThingDetailsPageState extends State<ThingDetailsPage> {
           ? _dateTimeFormatter.format(_selectedThing.deadline)
           : "";
     }
+
     _init = false;
+
     super.didChangeDependencies();
   }
 
@@ -204,6 +206,7 @@ class _ThingDetailsPageState extends State<ThingDetailsPage> {
 
   Future<void> _checkuncheck(BuildContext ctx, Thing thing) async {
     thing.toggleState();
+
     Provider.of<Things>(ctx, listen: false)
         .toggleStateThing(thing.id, thing.isChecked)
         .then((value) => Provider.of<BlocsThings>(ctx, listen: false)
@@ -213,6 +216,7 @@ class _ThingDetailsPageState extends State<ThingDetailsPage> {
   Future<void> _remove(
       BuildContext context, Thing thing, BlocThings blocThings) async {
     final response = await _showAlertDialog(context, thing);
+
     if (response == 'yes') {
       try {
         Provider.of<Things>(context, listen: false)
@@ -226,7 +230,7 @@ class _ThingDetailsPageState extends State<ThingDetailsPage> {
                       .updateBlocThingsCheckedCount(blocThings.id)
                 });
       } catch (error) {
-        // TODO
+        throw error;
       } finally {
         Navigator.of(context).pop();
       }

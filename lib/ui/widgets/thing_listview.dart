@@ -16,6 +16,7 @@ class ThingListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final things = Provider.of<Things>(context, listen: true)
         .findByBlocThingsId(_thingsList.id);
+
     return Flexible(
       child: ListView.builder(
         scrollDirection: Axis.vertical,

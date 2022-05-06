@@ -19,7 +19,7 @@ class _AuthSignUpState extends State<AuthSignUp> {
     'email': '',
     'password': '',
   };
-  var _isLoading = false;
+  bool _isLoading = false;
   final _passwordController = TextEditingController();
 
   @override
@@ -163,36 +163,30 @@ class _AuthSignUpState extends State<AuthSignUp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RaisedButton(
-                  elevation: 15,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    onPrimary: Colors.blue[50],
+                    elevation: 15,
+                    padding: const EdgeInsets.only(
+                        left: 80.0, top: 10.0, right: 80.0, bottom: 10.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                  ),
                   onPressed: () {
                     _signUp();
                   },
-                  padding: const EdgeInsets.only(
-                    left: 80.0,
-                    top: 10.0,
-                    right: 80.0,
-                    bottom: 10.0,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32),
-                  ),
-                  color: Colors.white,
-                  splashColor: Colors.white,
-                  highlightColor: Colors.blue[50],
                   child: _isLoading
                       ? Padding(
                           padding: EdgeInsets.only(right: 0, bottom: 0),
                           child: CircularProgressIndicator(
-                            backgroundColor: DayByDayAppTheme.accentColor,
-                          ),
+                              backgroundColor: DayByDayAppTheme.accentColor),
                         )
-                      : Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 20,
-                          ),
+                      : const Text(
+                          'Sign Up',
+                          style:
+                              const TextStyle(color: Colors.blue, fontSize: 20),
                         ),
                 ),
               ],
@@ -236,6 +230,7 @@ class _AuthSignUpState extends State<AuthSignUp> {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern);
+
     return (!regex.hasMatch(value)) ? false : true;
   }
 
@@ -250,7 +245,8 @@ class _AuthSignUpState extends State<AuthSignUp> {
             .signup(_authData['email'], _authData['password']);
       }
     } on HttpException catch (error) {
-      var errorMessage = 'Signup failed';
+      String errorMessage = 'Signup failed';
+
       if (error.toString().contains('INVALID_EMAIL')) {
         errorMessage = 'This is not a valid email address';
       } else if (error.toString().contains('WEAK_PASSWORD')) {
@@ -258,9 +254,11 @@ class _AuthSignUpState extends State<AuthSignUp> {
       } else if (error.toString().contains('INVALID_PASSWORD')) {
         errorMessage = 'Invalid password.';
       }
+
       _showErrorDialog(errorMessage);
     } catch (error) {
-      const errorMessage = 'Sign up failed. Please try again later.';
+      String errorMessage = 'Sign up failed. Please try again later.';
+
       _showErrorDialog(errorMessage);
     } finally {
       setState(() {

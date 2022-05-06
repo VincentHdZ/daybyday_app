@@ -31,20 +31,24 @@ class _BlocThingsOverviewPageState extends State<BlocThingsOverviewPage> {
       setState(() {
         _isLoading = true;
       });
+
       Provider.of<BlocsThings>(context).fetchAndSetBlocsThings();
       Provider.of<Things>(context).fetchAndSetThings().then((_) => {
             setState(() {
               _isLoading = false;
             })
           });
+
       _isInit = false;
     }
+
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     final List<BlocThings> blocThings = Provider.of<BlocsThings>(context).items;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -92,13 +96,11 @@ class _BlocThingsOverviewPageState extends State<BlocThingsOverviewPage> {
   }
 
   Widget _getBodyContent(List<BlocThings> blocThings) {
-    if (blocThings != null) {
-      if (blocThings.length <= 0) {
-        return BlocsThingsImage();
-      } else {
+    if (blocThings != null && blocThings.length > 0) {
         return BlocThingsGridview(_showModalFormEditBlocThings);
-      }
     }
+
+    return BlocsThingsImage();
   }
 
   void _showModalFormEditBlocThings(BuildContext ctx, BlocThings blocThings) {
@@ -109,6 +111,7 @@ class _BlocThingsOverviewPageState extends State<BlocThingsOverviewPage> {
       state: blocThings.state,
       things: blocThings.things,
     );
+
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(

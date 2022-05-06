@@ -8,12 +8,14 @@ import '../../ui/widgets/auth_signup.dart';
 
 class AuthPage extends StatefulWidget {
   static final String routeName = "/auth";
+
   @override
   _AuthPageState createState() => _AuthPageState();
 }
 
 class _AuthPageState extends State<AuthPage> {
   bool _signIn = true;
+
   void _setAuthMode() {
     setState(() {
       _signIn = !_signIn;
