@@ -9,6 +9,7 @@ class DayByDayRessources {
       "\"Quoi que vous ferez, ce sera insignifiant, mais il est très important que vous le fassiez.\"";
   static const textRessourceAutorCitation = "- Mahatma Gandhi";
   static const textRessourceTitleThingsAppBar = "Things to do";
+   static const textRessourceTitleBlocThingsAppBar = "Blocs things";
 
   static const textRessourceHintTextModalBottomSheetCreateNewListThings =
       "Titre de votre liste";
