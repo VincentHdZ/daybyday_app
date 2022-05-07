@@ -1,3 +1,4 @@
+import 'package:daybyday_app/ui/pages/tabs_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +59,7 @@ class DayByDayApp extends StatelessWidget {
             localizationsDelegates: [GlobalMaterialLocalizations.delegate],
             supportedLocales: [const Locale('en'), const Locale('fr')],
             home: auth.isAuth
-                ? BlocThingsOverviewPage()
+                ? TabsPage()
                 : FutureBuilder(
                     future: auth.tryAutoLogin(),
                     builder: (context, authResultSnapshot) =>

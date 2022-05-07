@@ -46,21 +46,6 @@ class _BlocThingsOverviewPageState extends State<BlocThingsOverviewPage> {
   Widget build(BuildContext context) {
     final List<BlocThings> blocThings = Provider.of<BlocsThings>(context).items;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          DayByDayRessources.textRessourceTitleThingsAppBar,
-        ),
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.logout,
-              ),
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed('/');
-                Provider.of<Auth>(context, listen: false).logout();
-              }),
-        ],
-      ),
       body: _isLoading
           ? Center(
               child: Container(
