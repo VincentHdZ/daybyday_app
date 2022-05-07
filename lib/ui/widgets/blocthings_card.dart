@@ -25,6 +25,7 @@ class _BlocThingsCardState extends State<BlocThingsCard> {
   Widget build(BuildContext context) {
     final blocThings = Provider.of<BlocThings>(context);
     blocThings.things = Provider.of<Things>(context).findByBlocThingsId(blocThings.id);
+
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, BlocThingsDetailsPage.routeName,
@@ -63,7 +64,7 @@ class _BlocThingsCardState extends State<BlocThingsCard> {
               ),
               Stack(
                 fit: StackFit.loose,
-                overflow: Overflow.visible,
+                clipBehavior: Clip.none,
                 children: [
                   Container(
                     height: 95,

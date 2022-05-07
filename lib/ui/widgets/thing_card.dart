@@ -22,7 +22,7 @@ class ThingCard extends StatelessWidget {
    String _getDescriptionSubString(String title) {
     return title.length > 50 ? title.substring(0, 50) + "..." : title;
   }
-  
+
   void _checkuncheck(BuildContext ctx, Thing thing, BlocThings thingsList) {
     thing.toggleState();
     Provider.of<Things>(ctx, listen: false)
@@ -107,6 +107,7 @@ class ThingCard extends StatelessWidget {
     final thingsList =
         Provider.of<BlocsThings>(context).findById(thing.blocThingsId);
     final DateFormat dateTimeFormatter = DateFormat('dd/MM/yyyy');
+
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, ThingDetailsPage.routeName,

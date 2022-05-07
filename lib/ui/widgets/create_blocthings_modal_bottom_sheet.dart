@@ -94,10 +94,12 @@ class _CreateBlocThingsModalBottomSheetState
       try {
         _setStateCircularProgressIndicator(true);
         _formKey.currentState.save();
+
         BlocThings createdBlocThings = new BlocThings(
           title: _blocThingsTitleTextController.text,
           things: [],
         );
+
         await Provider.of<BlocsThings>(context, listen: false)
             .addBlocThings(createdBlocThings);
       } catch (error) {

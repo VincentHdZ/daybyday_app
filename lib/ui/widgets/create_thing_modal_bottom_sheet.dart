@@ -6,7 +6,6 @@ import 'package:daybyday_app/services/providers/things.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import '../../models/thing.dart';
 import 'datepicker_formfield.dart';
@@ -34,6 +33,7 @@ class _CreateThingModalBottomSheetState
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         _setStateCircularProgressIndicator(true);
+
         final DateFormat dateTimeFormatter = DateFormat('dd/MM/yyyy');
         final newThing = new Thing(
           label: _labelThingTextController.text,
@@ -42,6 +42,7 @@ class _CreateThingModalBottomSheetState
               : dateTimeFormatter.parse(_deadlineDateTimeTextController.text),
           blocThingsId: widget._selectedThingsList.id,
         );
+
         await Provider.of<Things>(context, listen: false)
             .addThing(newThing)
             .then((_) {

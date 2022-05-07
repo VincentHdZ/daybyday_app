@@ -23,6 +23,7 @@ class ThingListTile extends StatelessWidget {
   Future<void> _remove(
       BuildContext context, Thing thing, BlocThings blocThings) async {
     final response = await _showAlertDialog(context, thing);
+
     if (response == 'yes') {
       Provider.of<Things>(context, listen: false)
           .revomeThing(thing.id)
@@ -96,13 +97,14 @@ class ThingListTile extends StatelessWidget {
     final thingsList =
         Provider.of<BlocsThings>(context).findById(thing.blocThingsId);
     final DateFormat dateTimeFormatter = DateFormat('dd/MM/yyyy');
+
     return Container(
         key: ValueKey(thing.id),
         width: double.infinity,
         margin: EdgeInsets.all(8.0),
         padding: EdgeInsets.all(12),
         child: Stack(
-          overflow: Overflow.visible,
+          clipBehavior: Clip.none,
           children: [
             GestureDetector(
               onTap: () {

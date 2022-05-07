@@ -26,6 +26,7 @@ class _BlocThingsDetailsPageState extends State<BlocThingsDetailsPage> {
   BlocThings _selectedBlocThings;
   String _blocThingsTitleAppBar;
   bool _init = true;
+
   void _setStatBlocThingsTitleAppBar(String titleUpdate) {
     setState(() {
       _blocThingsTitleAppBar = titleUpdate;
@@ -37,13 +38,17 @@ class _BlocThingsDetailsPageState extends State<BlocThingsDetailsPage> {
     if (_init) {
       final String selectedBlocThingsId =
           ModalRoute.of(context).settings.arguments as String;
+
       _selectedBlocThings = Provider.of<BlocsThings>(
         context,
         listen: true,
       ).findById(selectedBlocThingsId);
+
       _blocThingsTitleAppBar = _selectedBlocThings.title;
     }
+
     _init = false;
+
     super.didChangeDependencies();
   }
 
