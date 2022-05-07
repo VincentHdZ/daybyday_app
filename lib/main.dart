@@ -1,8 +1,9 @@
 import 'package:daybyday_app/ui/pages/tabs_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'models/thing.dart';
 import 'models/blocthings.dart';
@@ -20,7 +21,10 @@ import 'ui/pages/splash_screen.dart';
 import 'utils/daybyday_theme_app.dart';
 import 'utils/daybyday_resources.dart';
 
-void main() => runApp(DayByDayApp());
+Future main() async {
+  await dotenv.load(fileName: '.env');
+  runApp(DayByDayApp());
+}
 
 class DayByDayApp extends StatelessWidget {
   @override
@@ -52,7 +56,8 @@ class DayByDayApp extends StatelessWidget {
       child: ScreenUtilInit(
         // Iphone 11 1792 * 828
         designSize: Size(828, 1792),
-        child: Consumer<Auth>(builder: (ctx, auth, _) {
+        allowFontScaling: false,
+        builder: () => Consumer<Auth>(builder: (ctx, auth, _) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: DayByDayRessources.textRessourceTitleApp,
