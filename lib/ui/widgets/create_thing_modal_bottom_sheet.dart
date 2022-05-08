@@ -86,70 +86,73 @@ class _CreateThingModalBottomSheetState
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                keyboardType: TextInputType.text,
-                cursorColor: Color.fromRGBO(0, 176, 255, 0.9),
-                autofocus: true,
-                controller: _labelThingTextController,
-                style: TextStyle(fontSize: 20),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(left: 15),
-                  hintText: DayByDayRessources
-                      .textRessourceHintTextModalBottomSheetCreateNewThing,
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return DayByDayRessources
-                        .textRessourceValidatorMessageTitleNewListThings;
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _labelThingTextController.text = value;
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  DatePickerFormField(
-                    birthdayController: _deadlineDateTimeTextController,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.text,
+                  cursorColor: Color.fromRGBO(0, 176, 255, 0.9),
+                  autofocus: true,
+                  controller: _labelThingTextController,
+                  style: TextStyle(fontSize: 20),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(left: 15),
+                    hintText: DayByDayRessources
+                        .textRessourceHintTextModalBottomSheetCreateNewThing,
                   ),
-                  _isLoading
-                      ? Padding(
-                          padding: EdgeInsets.only(right: 25, bottom: 25),
-                          child: CircularProgressIndicator(
-                            backgroundColor: DayByDayAppTheme.accentColor,
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextButton(
-                            child: Text(
-                              DayByDayRessources.textRessourceSaveButton,
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Color.fromRGBO(0, 176, 255, 0.9),
-                              ),
-                            ),
-                            onPressed: () {
-                              _saveForm();
-                            },
-                          ),
-                        ),
-                ],
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return DayByDayRessources
+                          .textRessourceValidatorMessageTitleNewListThings;
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _labelThingTextController.text = value;
+                  },
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    DatePickerFormField(
+                      birthdayController: _deadlineDateTimeTextController,
+                    ),
+                    _isLoading
+                        ? Padding(
+                            padding: EdgeInsets.only(right: 25, bottom: 25),
+                            child: CircularProgressIndicator(
+                              backgroundColor: DayByDayAppTheme.accentColor,
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextButton(
+                              child: Text(
+                                DayByDayRessources.textRessourceSaveButton,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromRGBO(0, 176, 255, 0.9),
+                                ),
+                              ),
+                              onPressed: () {
+                                _saveForm();
+                              },
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
