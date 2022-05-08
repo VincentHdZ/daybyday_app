@@ -136,7 +136,6 @@ class _BlocThingsOverviewPageState extends State<BlocThingsOverviewPage> {
         ),
       ),
       elevation: 3,
-      isScrollControlled: true,
       context: ctx,
       builder: (BuildContext ctx) {
         return CreateBlocThingsModalBottomSheet();

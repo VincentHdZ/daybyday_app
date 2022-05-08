@@ -34,7 +34,7 @@ class BlocsThings with ChangeNotifier {
       final http.Response response = await http.get(url);
       final Map<String, dynamic> dataBlocsThings =
           json.decode(response.body) as Map<String, dynamic>;
-          final List<BlocThings> loadedBlocsThings = [];
+      final List<BlocThings> loadedBlocsThings = [];
       if (dataBlocsThings != null) {
         dataBlocsThings.forEach((blocThingsId, blocThingsData) {
           loadedBlocsThings.add(new BlocThings(
