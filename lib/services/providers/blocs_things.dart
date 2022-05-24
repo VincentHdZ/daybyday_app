@@ -45,18 +45,6 @@ class BlocsThings with ChangeNotifier {
             things: [],
           );
 
-          // dataThings.forEach((thingId, thingData) {
-          //   blocThingsConverted.things.add(new Thing(
-          //       id: thingId,
-          //       blocThingsId: blocThingsConverted.id,
-          //       label: thingData['data'],
-          //       description: thingData['description'],
-          //       isChecked: thingData['isChecked'],
-          //       deadline: thingData['deadline'] != null
-          //           ? dateTimeFormatter.parse(thingData['deadline'])
-          //           : null));
-          // });
-
           loadedBlocsThings.add(blocThingsConverted);
         });
 
