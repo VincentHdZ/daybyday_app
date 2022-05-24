@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:provider/provider.dart';
 
-import '../../services/providers/blocsthings.dart';
-
-import '../../ui/widgets/thing_listview.dart';
+import '../../services/providers/blocs_things.dart';
 
 import '../../models/blocthings.dart';
 
 import '../../utils/daybyday_theme_app.dart';
 
+import '../../ui/widgets/thing_listview.dart';
 import '../widgets/blocthings_image.dart';
 import '../widgets/blocthings_popup_menu_button.dart';
 import '../widgets/create_thing_modal_bottom_sheet.dart';

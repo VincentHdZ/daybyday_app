@@ -9,13 +9,12 @@ import 'models/thing.dart';
 import 'models/blocthings.dart';
 
 import 'services/providers/things.dart';
-import 'services/providers/blocsthings.dart';
+import 'services/providers/blocs_things.dart';
 import 'services/providers/auth.dart';
 
 import 'ui/pages/blocthings_details_page.dart';
 import 'ui/pages/thing_details_page.dart';
 import 'ui/pages/auth_page.dart';
-import 'ui/pages/blocthings_overview_page.dart';
 import 'ui/pages/splash_screen.dart';
 
 import 'utils/daybyday_theme_app.dart';

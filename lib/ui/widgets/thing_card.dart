@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:daybyday_app/models/blocthings.dart';
 import 'package:daybyday_app/models/thing.dart';
 
-import 'package:daybyday_app/services/providers/blocsthings.dart';
+import 'package:daybyday_app/services/providers/blocs_things.dart';
 import 'package:daybyday_app/services/providers/things.dart';
 
 import 'package:daybyday_app/ui/pages/thing_details_page.dart';
@@ -104,7 +104,7 @@ class ThingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final thing = Provider.of<Thing>(context);
-    final thingsList =
+    final blocThings =
         Provider.of<BlocsThings>(context).findById(thing.blocThingsId);
     final DateFormat dateTimeFormatter = DateFormat('dd/MM/yyyy');
 
@@ -194,7 +194,7 @@ class ThingCard extends StatelessWidget {
                         icon: Icon(thing.isChecked ? Icons.done : Icons.done_outline_sharp),
                         color: thing.isChecked ?  Colors.green[700] : Colors.white,
                         onPressed: () {
-                          _checkuncheck(context, thing, thingsList);
+                          _checkuncheck(context, thing, blocThings);
                         },
                       ),
                     ),
@@ -216,7 +216,7 @@ class ThingCard extends StatelessWidget {
                         icon: Icon(Icons.delete_outline),
                         color: Colors.white,
                         onPressed: () {
-                          _remove(context, thing, thingsList);
+                          _remove(context, thing, blocThings);
                         },
                       ),
                     ),
