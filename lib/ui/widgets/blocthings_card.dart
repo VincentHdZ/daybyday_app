@@ -6,7 +6,7 @@ import '../pages/blocthings_details_page.dart';
 
 import '../../models/blocthings.dart';
 
-import '../../services/providers/blocsthings.dart';
+import '../../services/providers/blocs_things.dart';
 
 import '../../utils/daybyday_resources.dart';
 import '../../utils/daybyday_theme_app.dart';

@@ -11,7 +11,7 @@ import '../../utils/daybyday_resources.dart';
 import '../../models/thing.dart';
 import '../../models/blocthings.dart';
 
-import '../../services/providers/blocsthings.dart';
+import '../../services/providers/blocs_things.dart';
 import '../../services/providers/things.dart';
 
 class ThingDetailsPage extends StatefulWidget {

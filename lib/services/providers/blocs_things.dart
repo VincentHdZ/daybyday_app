@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -37,15 +36,30 @@ class BlocsThings with ChangeNotifier {
       final List<BlocThings> loadedBlocsThings = [];
       if (dataBlocsThings != null) {
         dataBlocsThings.forEach((blocThingsId, blocThingsData) {
-          loadedBlocsThings.add(new BlocThings(
+          BlocThings blocThingsConverted = new BlocThings(
             id: blocThingsId,
             title: blocThingsData['title'],
             checkedCount: blocThingsData['checkedCount'],
             state: Status.values.firstWhere((element) =>
                 element.toString().split('.')[1] == blocThingsData['state']),
             things: [],
-          ));
+          );
+
+          // dataThings.forEach((thingId, thingData) {
+          //   blocThingsConverted.things.add(new Thing(
+          //       id: thingId,
+          //       blocThingsId: blocThingsConverted.id,
+          //       label: thingData['data'],
+          //       description: thingData['description'],
+          //       isChecked: thingData['isChecked'],
+          //       deadline: thingData['deadline'] != null
+          //           ? dateTimeFormatter.parse(thingData['deadline'])
+          //           : null));
+          // });
+
+          loadedBlocsThings.add(blocThingsConverted);
         });
+
         _items = loadedBlocsThings;
         notifyListeners();
       }

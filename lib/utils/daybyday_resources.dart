@@ -47,7 +47,7 @@ class DayByDayRessources {
   static const textRessourceAlertDialogTitleErrorMessage =
       "Une erreur s\'est produite!";
   static const textRessourceAlertDialogContentErrorMessage =
-      "L\'enregistrement ne s\'est pas éffectuée";
+      "L’enregistrement ne s’est pas éffectuée";
 
   static final textTitleAuthScreen = dotenv.env['APP_NAME'];
 }

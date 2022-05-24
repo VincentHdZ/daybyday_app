@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../services/providers/blocsthings.dart';
+import '../../services/providers/blocs_things.dart';
 
 import '../../models/blocthings.dart';
 

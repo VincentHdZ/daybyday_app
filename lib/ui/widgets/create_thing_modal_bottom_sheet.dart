@@ -1,4 +1,4 @@
-import 'package:daybyday_app/services/providers/blocsthings.dart';
+import 'package:daybyday_app/services/providers/blocs_things.dart';
 import 'package:daybyday_app/utils/daybyday_theme_app.dart';
 
 import '../../models/blocthings.dart';

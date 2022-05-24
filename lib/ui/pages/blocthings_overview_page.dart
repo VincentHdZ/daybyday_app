@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:provider/provider.dart';
 
-import '../../services/providers/blocsthings.dart';
+import '../../services/providers/blocs_things.dart';
 import '../../services/providers/things.dart';
 import '../../services/providers/auth.dart';
 
 import '../../models/blocthings.dart';
 
-import '../../utils/daybyday_resources.dart';
 import '../../utils/daybyday_theme_app.dart';
 
 import '../widgets/create_blocthings_modal_bottom_sheet.dart';
