@@ -1,8 +1,11 @@
-import 'package:daybyday_app/models/http_exception.dart';
-import 'package:daybyday_app/services/providers/auth.dart';
-import 'package:daybyday_app/utils/daybyday_theme_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../services/providers/auth.dart';
+
+import '../../models/http_exception.dart';
+
+import '../../utils/daybyday_theme_app.dart';
 
 class AuthSignUp extends StatefulWidget {
   final Function setAuthMode;

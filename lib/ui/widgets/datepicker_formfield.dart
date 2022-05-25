@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../utils/daybyday_theme_app.dart';
 
 class DatePickerFormField extends StatefulWidget {
@@ -11,12 +11,10 @@ class DatePickerFormField extends StatefulWidget {
   DatePickerFormField({this.birthday, this.birthdayController});
 
   @override
-  _DatePickerFormFieldState createState() =>
-      _DatePickerFormFieldState();
+  _DatePickerFormFieldState createState() => _DatePickerFormFieldState();
 }
 
-class _DatePickerFormFieldState
-    extends State<DatePickerFormField> {
+class _DatePickerFormFieldState extends State<DatePickerFormField> {
   final DateFormat dateTimeFormatter = DateFormat('dd/MM/yyyy');
   DateTime _birthdayUpdated = DateTime.now();
 

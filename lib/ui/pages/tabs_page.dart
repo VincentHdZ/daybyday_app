@@ -1,10 +1,13 @@
-import 'package:daybyday_app/services/providers/auth.dart';
-import 'package:daybyday_app/ui/pages/blocthings_overview_page.dart';
-import 'package:daybyday_app/ui/pages/things_overview_page.dart';
-import 'package:daybyday_app/utils/daybyday_resources.dart';
-import 'package:daybyday_app/utils/daybyday_theme_app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../services/providers/auth.dart';
+
+import '../../utils/daybyday_resources.dart';
+import '../../utils/daybyday_theme_app.dart';
+
+import '/ui/pages/blocthings_overview_page.dart';
+import '/ui/pages/things_overview_page.dart';
 
 class TabsPage extends StatefulWidget {
   @override

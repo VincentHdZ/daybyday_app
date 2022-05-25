@@ -1,15 +1,17 @@
-import 'package:daybyday_app/services/providers/blocs_things.dart';
-import 'package:daybyday_app/utils/daybyday_theme_app.dart';
-
-import '../../models/blocthings.dart';
-import 'package:daybyday_app/services/providers/things.dart';
 import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../services/providers/blocs_things.dart';
+import '../../services/providers/things.dart';
+
+import '../../models/blocthings.dart';
 import '../../models/thing.dart';
-import 'datepicker_formfield.dart';
+
+import '../../utils/daybyday_theme_app.dart';
 import '../../utils/daybyday_resources.dart';
+
+import 'datepicker_formfield.dart';
 
 class CreateThingModalBottomSheet extends StatefulWidget {
   final BlocThings _selectedThingsList;
@@ -87,7 +89,8 @@ class _CreateThingModalBottomSheetState
       key: _formKey,
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,

@@ -3,16 +3,16 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../ui/widgets/datepicker_formfield.dart';
-
-import '../../utils/daybyday_theme_app.dart';
-import '../../utils/daybyday_resources.dart';
+import '../../services/providers/blocs_things.dart';
+import '../../services/providers/things.dart';
 
 import '../../models/thing.dart';
 import '../../models/blocthings.dart';
 
-import '../../services/providers/blocs_things.dart';
-import '../../services/providers/things.dart';
+import '../../utils/daybyday_theme_app.dart';
+import '../../utils/daybyday_resources.dart';
+
+import '../../ui/widgets/datepicker_formfield.dart';
 
 class ThingDetailsPage extends StatefulWidget {
   static final String routeName = "/detailsThingPage";
