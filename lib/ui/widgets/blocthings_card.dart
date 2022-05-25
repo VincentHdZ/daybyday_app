@@ -1,15 +1,15 @@
-import 'package:daybyday_app/services/providers/things.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../pages/blocthings_details_page.dart';
-
+import '../../services/providers/things.dart';
 import '../../models/blocthings.dart';
 
 import '../../services/providers/blocs_things.dart';
 
 import '../../utils/daybyday_resources.dart';
 import '../../utils/daybyday_theme_app.dart';
+
+import '../pages/blocthings_details_page.dart';
 
 class BlocThingsCard extends StatefulWidget {
   final Function handleFunc;
@@ -24,7 +24,8 @@ class _BlocThingsCardState extends State<BlocThingsCard> {
   @override
   Widget build(BuildContext context) {
     final blocThings = Provider.of<BlocThings>(context);
-    blocThings.things = Provider.of<Things>(context).findByBlocThingsId(blocThings.id);
+    blocThings.things =
+        Provider.of<Things>(context).findByBlocThingsId(blocThings.id);
 
     return GestureDetector(
       onTap: () {

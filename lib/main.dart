@@ -1,24 +1,24 @@
-import 'package:daybyday_app/ui/pages/tabs_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-import 'models/thing.dart';
-import 'models/blocthings.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'services/providers/things.dart';
 import 'services/providers/blocs_things.dart';
 import 'services/providers/auth.dart';
 
+import 'models/thing.dart';
+import 'models/blocthings.dart';
+
+import 'utils/daybyday_theme_app.dart';
+import 'utils/daybyday_resources.dart';
+
+import 'ui/pages/tabs_page.dart';
 import 'ui/pages/blocthings_details_page.dart';
 import 'ui/pages/thing_details_page.dart';
 import 'ui/pages/auth_page.dart';
 import 'ui/pages/splash_screen.dart';
-
-import 'utils/daybyday_theme_app.dart';
-import 'utils/daybyday_resources.dart';
 
 Future main() async {
   await dotenv.load(fileName: '.env');

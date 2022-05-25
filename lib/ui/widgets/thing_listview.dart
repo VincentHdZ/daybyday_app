@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:daybyday_app/ui/widgets/thing_card.dart';
-
 import '../../models/blocthings.dart';
 
-import 'package:daybyday_app/services/providers/things.dart';
+import '../../services/providers/things.dart';
+
+import '../../ui/widgets/thing_card.dart';
 
 class ThingListView extends StatelessWidget {
   final BlocThings _thingsList;

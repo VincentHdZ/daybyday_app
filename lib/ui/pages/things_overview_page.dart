@@ -1,10 +1,10 @@
-import 'package:daybyday_app/models/blocthings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/providers/blocs_things.dart';
 import '../../services/providers/things.dart';
 
+import '../../models/blocthings.dart';
 import '../../models/thing.dart';
 
 import '../../utils/daybyday_theme_app.dart';

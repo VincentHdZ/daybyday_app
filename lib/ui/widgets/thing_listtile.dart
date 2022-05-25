@@ -1,15 +1,17 @@
-import 'package:daybyday_app/services/providers/blocs_things.dart';
-
-import '../../models/blocthings.dart';
-import 'package:daybyday_app/services/providers/things.dart';
-import 'package:daybyday_app/ui/pages/thing_details_page.dart';
-import 'package:daybyday_app/utils/daybyday_resources.dart';
-import 'package:daybyday_app/utils/daybyday_theme_app.dart';
 import 'package:intl/intl.dart';
-
-import 'package:daybyday_app/models/thing.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../models/blocthings.dart';
+import '../../models/thing.dart';
+
+import '../../services/providers/blocs_things.dart';
+import '../../services/providers/things.dart';
+
+import '../../utils/daybyday_theme_app.dart';
+import '../../utils/daybyday_resources.dart';
+
+import '../../ui/pages/thing_details_page.dart';
 
 class ThingListTile extends StatelessWidget {
   void _checkuncheck(BuildContext ctx, Thing thing, BlocThings thingsList) {

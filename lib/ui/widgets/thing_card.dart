@@ -1,25 +1,24 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:intl/intl.dart';
+import '../../models/blocthings.dart';
+import '../../models/thing.dart';
 
-import 'package:daybyday_app/models/blocthings.dart';
-import 'package:daybyday_app/models/thing.dart';
+import '../../services/providers/blocs_things.dart';
+import '../../services/providers/things.dart';
 
-import 'package:daybyday_app/services/providers/blocs_things.dart';
-import 'package:daybyday_app/services/providers/things.dart';
+import '../../utils/daybyday_resources.dart';
+import '../../utils/daybyday_theme_app.dart';
 
-import 'package:daybyday_app/ui/pages/thing_details_page.dart';
-
-import 'package:daybyday_app/utils/daybyday_resources.dart';
-import 'package:daybyday_app/utils/daybyday_theme_app.dart';
+import '../../ui/pages/thing_details_page.dart';
 
 class ThingCard extends StatelessWidget {
- String _getTitleSubString(String title) {
+  String _getTitleSubString(String title) {
     return title.length > 10 ? title.substring(0, 10) + "..." : title;
   }
 
-   String _getDescriptionSubString(String title) {
+  String _getDescriptionSubString(String title) {
     return title.length > 50 ? title.substring(0, 50) + "..." : title;
   }
 
@@ -159,12 +158,16 @@ class ThingCard extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: thing.description != null && thing.description.isNotEmpty ? Alignment.centerLeft :
-                    Alignment.center,
+                alignment:
+                    thing.description != null && thing.description.isNotEmpty
+                        ? Alignment.centerLeft
+                        : Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(thing.description != null && thing.description.isNotEmpty ? _getDescriptionSubString(thing.description) :
-                    "...",
+                  child: Text(
+                    thing.description != null && thing.description.isNotEmpty
+                        ? _getDescriptionSubString(thing.description)
+                        : "...",
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                       fontSize: 18,
@@ -184,15 +187,24 @@ class ThingCard extends StatelessWidget {
                         color: null,
                         shape: CircleBorder(
                             side: BorderSide(
-                          color: thing.isChecked ?  Colors.green[700] : Colors.white,
+                          color: thing.isChecked
+                              ? Colors.green[700]
+                              : Colors.white,
                           width: 2,
                         )),
                       ),
                       child: IconButton(
-                        splashColor: thing.isChecked ? Colors.white70 : Colors.green[700],
-                        highlightColor: thing.isChecked ? Colors.white70 : Colors.green[700],
-                        icon: Icon(thing.isChecked ? Icons.done : Icons.done_outline_sharp),
-                        color: thing.isChecked ?  Colors.green[700] : Colors.white,
+                        splashColor: thing.isChecked
+                            ? Colors.white70
+                            : Colors.green[700],
+                        highlightColor: thing.isChecked
+                            ? Colors.white70
+                            : Colors.green[700],
+                        icon: Icon(thing.isChecked
+                            ? Icons.done
+                            : Icons.done_outline_sharp),
+                        color:
+                            thing.isChecked ? Colors.green[700] : Colors.white,
                         onPressed: () {
                           _checkuncheck(context, thing, blocThings);
                         },
