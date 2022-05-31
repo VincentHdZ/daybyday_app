@@ -22,6 +22,49 @@ class _EditBlocThingsOverviewModalBottomSheetState
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   bool _isLoading = false;
 
+    Future<void> _saveForm() async {
+    try {
+      if (formKey.currentState.validate()) {
+        formKey.currentState.save();
+        _setStateCircularProgressIndicator(true);
+        await Provider.of<BlocsThings>(context, listen: false)
+            .updateBlocThings(widget.editedBlocThings);
+      }
+    } catch (error) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(
+              DayByDayRessources.textRessourceAlertDialogTitleErrorMessage),
+          content: Text(
+              DayByDayRessources.textRessourceAlertDialogContentErrorMessage),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: DayByDayAppTheme.accentColor,
+              ),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: Text(DayByDayRessources.textRessourceOk),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      if (_isLoading) {
+        _setStateCircularProgressIndicator(false);
+        Navigator.of(context).pop();
+      }
+    }
+  }
+
+  void _setStateCircularProgressIndicator(bool isLoading) {
+    setState(() {
+      _isLoading = isLoading;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -88,48 +131,5 @@ class _EditBlocThingsOverviewModalBottomSheetState
         ),
       ),
     );
-  }
-
-  Future<void> _saveForm() async {
-    try {
-      if (formKey.currentState.validate()) {
-        formKey.currentState.save();
-        _setStateCircularProgressIndicator(true);
-        await Provider.of<BlocsThings>(context, listen: false)
-            .updateBlocThings(widget.editedBlocThings);
-      }
-    } catch (error) {
-      await showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text(
-              DayByDayRessources.textRessourceAlertDialogTitleErrorMessage),
-          content: Text(
-              DayByDayRessources.textRessourceAlertDialogContentErrorMessage),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: DayByDayAppTheme.accentColor,
-              ),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-              child: Text(DayByDayRessources.textRessourceOk),
-            ),
-          ],
-        ),
-      );
-    } finally {
-      if (_isLoading) {
-        _setStateCircularProgressIndicator(false);
-        Navigator.of(context).pop();
-      }
-    }
-  }
-
-  void _setStateCircularProgressIndicator(bool isLoading) {
-    setState(() {
-      _isLoading = isLoading;
-    });
   }
 }

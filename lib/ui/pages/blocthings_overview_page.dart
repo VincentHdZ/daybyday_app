@@ -44,51 +44,16 @@ class _BlocThingsOverviewPageState extends State<BlocThingsOverviewPage> {
     super.didChangeDependencies();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final List<BlocThings> blocThings = Provider.of<BlocsThings>(context).items;
-
-    return Scaffold(
-      body: _isLoading
-          ? Center(
-              child: Container(
-                height: 100,
-                width: 100,
-                child: CircularProgressIndicator(
-                  backgroundColor: DayByDayAppTheme.accentColor,
-                  strokeWidth: 10,
-                ),
-              ),
-            )
-          : _getBodyContent(blocThings),
-      floatingActionButton: _getFloatingActionButton(),
-    );
-  }
-
-  Widget _buttonLogout() {
-    return Builder(
-      builder: (BuildContext context) {
-        return IconButton(
-            icon: Icon(
-              Icons.logout,
-            ),
-            onPressed: () {
-              Provider.of<Auth>(context, listen: false).logout();
-            });
-      },
-    );
-  }
-
   Widget _getBodyContent(List<BlocThings> blocThings) {
     if (blocThings != null && blocThings.length > 0) {
-        return BlocThingsGridview(_showModalFormEditBlocThings);
+      return BlocThingsGridview(_showModalFormEditBlocThings);
     }
 
     return BlocsThingsImage();
   }
 
   void _showModalFormEditBlocThings(BuildContext ctx, BlocThings blocThings) {
-    BlocThings editedBlocThings = new BlocThings(
+    final BlocThings editedBlocThings = new BlocThings(
       id: blocThings.id,
       title: blocThings.title,
       checkedCount: blocThings.checkedCount,
@@ -139,6 +104,27 @@ class _BlocThingsOverviewPageState extends State<BlocThingsOverviewPage> {
       builder: (BuildContext ctx) {
         return CreateBlocThingsModalBottomSheet();
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final List<BlocThings> blocThings = Provider.of<BlocsThings>(context).items;
+
+    return Scaffold(
+      body: _isLoading
+          ? Center(
+              child: Container(
+                height: 100,
+                width: 100,
+                child: CircularProgressIndicator(
+                  backgroundColor: DayByDayAppTheme.accentColor,
+                  strokeWidth: 10,
+                ),
+              ),
+            )
+          : _getBodyContent(blocThings),
+      floatingActionButton: _getFloatingActionButton(),
     );
   }
 }

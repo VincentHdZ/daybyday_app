@@ -18,12 +18,85 @@ class AuthSignUp extends StatefulWidget {
 
 class _AuthSignUpState extends State<AuthSignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
   Map<String, String> _authData = {
     'email': '',
     'password': '',
   };
-  bool _isLoading = false;
-  final _passwordController = TextEditingController();
+
+  bool _validateEmail(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+
+    return (!regex.hasMatch(value)) ? false : true;
+  }
+
+  String _getErrorMessage(HttpException error){
+      if (error.toString().contains('INVALID_EMAIL')) {
+        return 'This is not a valid email address';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        return 'This password is too weak.';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        return 'Invalid password.';
+      }else{
+        return 'Signup failed';
+      }
+  }
+
+  Future<void> _signUp() async {
+    try {
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        setState(() {
+          _isLoading = true;
+        });
+        await Provider.of<Auth>(context, listen: false)
+            .signup(_authData['email'], _authData['password']);
+      }
+    } on HttpException catch (error) {
+      final String errorMessage = _getErrorMessage(error);
+
+      _showErrorDialog(errorMessage);
+    } catch (error) {
+      String errorMessage = 'Sign up failed. Please try again later.';
+
+      _showErrorDialog(errorMessage);
+    } finally {
+      setState(() {
+        if (_isLoading) {
+          _isLoading = false;
+          widget.setAuthMode();
+        }
+      });
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text(
+              'Okay',
+              style: TextStyle(
+                color: DayByDayAppTheme.accentColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   void dispose() {
@@ -225,75 +298,6 @@ class _AuthSignUpState extends State<AuthSignUp> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  bool _validateEmail(String value) {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-
-    return (!regex.hasMatch(value)) ? false : true;
-  }
-
-  Future<void> _signUp() async {
-    try {
-      if (_formKey.currentState.validate()) {
-        _formKey.currentState.save();
-        setState(() {
-          _isLoading = true;
-        });
-        await Provider.of<Auth>(context, listen: false)
-            .signup(_authData['email'], _authData['password']);
-      }
-    } on HttpException catch (error) {
-      String errorMessage = 'Signup failed';
-
-      if (error.toString().contains('INVALID_EMAIL')) {
-        errorMessage = 'This is not a valid email address';
-      } else if (error.toString().contains('WEAK_PASSWORD')) {
-        errorMessage = 'This password is too weak.';
-      } else if (error.toString().contains('INVALID_PASSWORD')) {
-        errorMessage = 'Invalid password.';
-      }
-
-      _showErrorDialog(errorMessage);
-    } catch (error) {
-      String errorMessage = 'Sign up failed. Please try again later.';
-
-      _showErrorDialog(errorMessage);
-    } finally {
-      setState(() {
-        if (_isLoading) {
-          _isLoading = false;
-          widget.setAuthMode();
-        }
-      });
-    }
-  }
-
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('An Error Occurred!'),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: Text(
-              'Okay',
-              style: TextStyle(
-                color: DayByDayAppTheme.accentColor,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
       ),
     );
   }

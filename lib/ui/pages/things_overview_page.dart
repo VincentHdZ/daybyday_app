@@ -21,11 +21,6 @@ class _ThingsOverviewPageState extends State<ThingsOverviewPage> {
   bool _isLoading = false;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() {
     if (_isInit) {
       setState(() {
@@ -49,7 +44,6 @@ class _ThingsOverviewPageState extends State<ThingsOverviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final List<Thing> things = Provider.of<Things>(context, listen: true).items;
     List<BlocThings> blocsThings = Provider.of<BlocsThings>(context).items;
     List<Thing> allThings = [];
 
@@ -58,9 +52,11 @@ class _ThingsOverviewPageState extends State<ThingsOverviewPage> {
           .findByBlocThingsId(bloc.id)
           .where((element) =>
               element.deadline?.toIso8601String()?.split('T')?.first ==
-              DateTime.now().toIso8601String().split('T').first && !element.isChecked)
+                  DateTime.now().toIso8601String().split('T').first &&
+              !element.isChecked)
           .toList();
     });
+
     blocsThings.forEach((bloc) {
       bloc.things.forEach((thing) {
         allThings.add(thing);

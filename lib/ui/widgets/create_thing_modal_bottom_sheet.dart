@@ -25,9 +25,9 @@ class CreateThingModalBottomSheet extends StatefulWidget {
 
 class _CreateThingModalBottomSheetState
     extends State<CreateThingModalBottomSheet> {
-  final _formKey = GlobalKey<FormState>();
-  final _labelThingTextController = new TextEditingController();
-  final _deadlineDateTimeTextController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _labelThingTextController = new TextEditingController();
+  final TextEditingController _deadlineDateTimeTextController = TextEditingController();
   bool _isLoading = false;
 
   Future<void> _saveForm() async {
@@ -37,7 +37,7 @@ class _CreateThingModalBottomSheetState
         _setStateCircularProgressIndicator(true);
 
         final DateFormat dateTimeFormatter = DateFormat('dd/MM/yyyy');
-        final newThing = new Thing(
+        final Thing newThing = new Thing(
           label: _labelThingTextController.text,
           deadline: _deadlineDateTimeTextController.text.isEmpty
               ? null

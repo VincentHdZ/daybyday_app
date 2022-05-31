@@ -51,21 +51,6 @@ class _BlocThingsDetailsPageState extends State<BlocThingsDetailsPage> {
     super.didChangeDependencies();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_blocThingsTitleAppBar),
-        actions: [
-          BlocThingsPopupMenuButton(
-              _selectedBlocThings, _setStatBlocThingsTitleAppBar),
-        ],
-      ),
-      body: _getBodyContent(),
-      floatingActionButton: _getFloatingActionButton(),
-    );
-  }
-
   Widget _getBodyContent() {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints viewportConstraints) {
@@ -114,6 +99,21 @@ class _BlocThingsDetailsPageState extends State<BlocThingsDetailsPage> {
       builder: (BuildContext ctx) {
         return CreateThingModalBottomSheet(_selectedBlocThings);
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_blocThingsTitleAppBar),
+        actions: [
+          BlocThingsPopupMenuButton(
+              _selectedBlocThings, _setStatBlocThingsTitleAppBar),
+        ],
+      ),
+      body: _getBodyContent(),
+      floatingActionButton: _getFloatingActionButton(),
     );
   }
 }

@@ -19,6 +19,7 @@ class Thing with ChangeNotifier {
 
   void toggleState() {
     isChecked = !isChecked;
+
     notifyListeners();
   }
 }

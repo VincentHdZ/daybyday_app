@@ -95,8 +95,8 @@ class ThingListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final thing = Provider.of<Thing>(context);
-    final thingsList =
+    final Thing thing = Provider.of<Thing>(context);
+    final BlocThings blocThings =
         Provider.of<BlocsThings>(context).findById(thing.blocThingsId);
     final DateFormat dateTimeFormatter = DateFormat('dd/MM/yyyy');
 
@@ -172,7 +172,7 @@ class ThingListTile extends StatelessWidget {
                           color: Colors.black,
                         ),
                   onPressed: () {
-                    _checkuncheck(context, thing, thingsList);
+                    _checkuncheck(context, thing, blocThings);
                   },
                 ),
               ),
@@ -195,7 +195,7 @@ class ThingListTile extends StatelessWidget {
                     color: Colors.redAccent[700],
                   ),
                   onPressed: () {
-                    _remove(context, thing, thingsList);
+                    _remove(context, thing, blocThings);
                   },
                 ),
               ),

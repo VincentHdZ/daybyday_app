@@ -41,6 +41,7 @@ class Auth with ChangeNotifier {
               'returnSecureToken': true,
             },
           ));
+
       final responseData = json.decode(response.body);
 
       if (responseData['error'] != null) {
@@ -53,7 +54,7 @@ class Auth with ChangeNotifier {
 
   Future<void> signin(String email, String password) async {
     try {
-      final String url =dotenv.env['SIGN_IN_WITH_PWD_END_POINT'];
+      final String url = dotenv.env['SIGN_IN_WITH_PWD_END_POINT'];
       final response = await http.post(url,
           body: json.encode({
             'email': email,
@@ -93,9 +94,11 @@ class Auth with ChangeNotifier {
 
   Future<bool> tryAutoLogin() async {
     final prefs = await SharedPreferences.getInstance();
+
     if (!prefs.containsKey('userData')) {
       return false;
     }
+
     final extractedUserData =
         json.decode(prefs.getString('userData')) as Map<String, Object>;
     final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
@@ -103,11 +106,14 @@ class Auth with ChangeNotifier {
     if (expiryDate.isBefore(DateTime.now())) {
       return false;
     }
+
     _token = extractedUserData['token'];
     _userId = extractedUserData['userId'];
     _expiryDate = expiryDate;
+
     notifyListeners();
     _autoLogout();
+
     return true;
   }
 
@@ -115,12 +121,16 @@ class Auth with ChangeNotifier {
     _token = null;
     _expiryDate = null;
     _userId = null;
+
     if (_authTimer != null) {
       _authTimer.cancel();
       _authTimer = null;
     }
+
     notifyListeners();
+
     final prefs = await SharedPreferences.getInstance();
+
     prefs.clear();
   }
 
@@ -128,6 +138,7 @@ class Auth with ChangeNotifier {
     if (_authTimer != null) {
       _authTimer.cancel();
     }
+
     final timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
     _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
   }

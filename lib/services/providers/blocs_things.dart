@@ -10,15 +10,14 @@ import '../../models/thing.dart';
 import '../../utils/enums/status.dart';
 
 class BlocsThings with ChangeNotifier {
-  List<BlocThings> _items = [];
-  // UnmodifiableListView<BlocThings> get items => UnmodifiableListView(_items);
-  List<BlocThings> get items {
-    return _items;
-  }
-
   final String _urlBase = dotenv.env['END_POINT'];
   final String authToken;
   final String userId;
+  List<BlocThings> _items = [];
+
+  List<BlocThings> get items {
+    return _items;
+  }
 
   BlocsThings(this.authToken, this.userId, this._items);
 
@@ -34,6 +33,7 @@ class BlocsThings with ChangeNotifier {
       final Map<String, dynamic> dataBlocsThings =
           json.decode(response.body) as Map<String, dynamic>;
       final List<BlocThings> loadedBlocsThings = [];
+
       if (dataBlocsThings != null) {
         dataBlocsThings.forEach((blocThingsId, blocThingsData) {
           BlocThings blocThingsConverted = new BlocThings(
@@ -49,6 +49,7 @@ class BlocsThings with ChangeNotifier {
         });
 
         _items = loadedBlocsThings;
+
         notifyListeners();
       }
     } catch (error) {
@@ -78,7 +79,9 @@ class BlocsThings with ChangeNotifier {
         checkedCount: createdBlocThings.checkedCount,
         things: [],
       );
+
       _items.add(addedBlocThings);
+
       notifyListeners();
     } catch (error) {
       print("Error -- $error");
@@ -88,13 +91,17 @@ class BlocsThings with ChangeNotifier {
 
   Future<void> updateBlocThings(BlocThings editedBlocThings) async {
     try {
-      final String id = editedBlocThings.id;
-      final String url = "${_urlBase}blocsthings/$id.json?auth=$authToken";
+      final String url =
+          "${_urlBase}blocsthings/${editedBlocThings.id}.json?auth=$authToken";
+
       await http.patch(url,
           body: json.encode({'title': editedBlocThings.title}));
+
       final int thingsIndex =
           _items.indexWhere((element) => element.id == editedBlocThings.id);
+
       _items[thingsIndex] = editedBlocThings;
+
       notifyListeners();
     } catch (error) {
       print("Error -- $error");
@@ -106,11 +113,15 @@ class BlocsThings with ChangeNotifier {
     try {
       final String url =
           "${_urlBase}blocsthings/$blocThingsId.json?auth=$authToken";
+
       await http.delete(url);
+
       final int thingsToRemoveIndex =
           _items.indexWhere((element) => element.id == blocThingsId);
+
       _items[thingsToRemoveIndex].things.clear();
       _items.removeWhere((thingsList) => thingsList.id == blocThingsId);
+
       notifyListeners();
     } catch (error) {
       print("Error -- $error");
@@ -121,8 +132,9 @@ class BlocsThings with ChangeNotifier {
   Future<void> addThingToBlocThings(
       String blocThingsId, Thing createdThing) async {
     try {
-      String url =
+      final String url =
           "${_urlBase}blocsthings/$blocThingsId/things.json?auth=$authToken";
+
       if (blocThingsId.isNotEmpty) {
         await http.post(url,
             body: json
@@ -130,7 +142,9 @@ class BlocsThings with ChangeNotifier {
       }
       final blocThingsIndex =
           _items.indexWhere((element) => element.id == blocThingsId);
+
       _items[blocThingsIndex].things.add(createdThing);
+
       notifyListeners();
     } catch (error) {
       print("Error -- $error");
@@ -140,7 +154,8 @@ class BlocsThings with ChangeNotifier {
 
   Future<void> updateBlocThingsCheckedCount(String blocThingsId) async {
     try {
-      String url = "${_urlBase}blocsthings/$blocThingsId.json?auth=$authToken";
+      final String url =
+          "${_urlBase}blocsthings/$blocThingsId.json?auth=$authToken";
       final thingsIndex =
           _items.indexWhere((element) => element.id == blocThingsId);
       final int checkedCount = _items[thingsIndex]
@@ -148,12 +163,14 @@ class BlocsThings with ChangeNotifier {
           .where((element) => element.isChecked == true)
           .toList()
           .length;
+
       await http.patch(url,
           body: json.encode({
             'checkedCount': checkedCount,
           }));
 
       _items[thingsIndex].checkedCount = checkedCount;
+
       notifyListeners();
     } catch (error) {
       print("Error -- $error");
@@ -168,10 +185,13 @@ class BlocsThings with ChangeNotifier {
           _items.indexWhere((element) => element.id == blocThingsId);
       final String url =
           "${_urlBase}blocsthings/$blocThingsId/things/$thingId.json?auth=$authToken";
+
       await http.delete(url);
+
       _items[blocThingsIndex]
           .things
           .removeWhere((element) => element.id == thingId);
+
       notifyListeners();
     } catch (error) {
       print("Error -- $error");
