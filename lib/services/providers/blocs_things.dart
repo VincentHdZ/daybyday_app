@@ -120,7 +120,7 @@ class BlocsThings with ChangeNotifier {
           _items.indexWhere((element) => element.id == blocThingsId);
 
       _items[thingsToRemoveIndex].things.clear();
-      _items.removeWhere((thingsList) => thingsList.id == blocThingsId);
+      _items.removeWhere((blocThings) => blocThings.id == blocThingsId);
 
       notifyListeners();
     } catch (error) {

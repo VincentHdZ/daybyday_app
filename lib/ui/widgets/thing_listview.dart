@@ -8,14 +8,14 @@ import '../../services/providers/things.dart';
 import '../../ui/widgets/thing_card.dart';
 
 class ThingListView extends StatelessWidget {
-  final BlocThings _thingsList;
+  final BlocThings _blocThings;
 
-  ThingListView(this._thingsList);
+  ThingListView(this._blocThings);
 
   @override
   Widget build(BuildContext context) {
     final things = Provider.of<Things>(context, listen: true)
-        .findByBlocThingsId(_thingsList.id);
+        .findByBlocThingsId(_blocThings.id);
 
     return Flexible(
       child: ListView.builder(

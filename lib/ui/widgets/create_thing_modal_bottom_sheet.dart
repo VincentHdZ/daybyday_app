@@ -14,9 +14,9 @@ import '../../utils/daybyday_resources.dart';
 import 'datepicker_formfield.dart';
 
 class CreateThingModalBottomSheet extends StatefulWidget {
-  final BlocThings _selectedThingsList;
+  final BlocThings _selectedBlocThings;
 
-  CreateThingModalBottomSheet(this._selectedThingsList);
+  CreateThingModalBottomSheet(this._selectedBlocThings);
 
   @override
   _CreateThingModalBottomSheetState createState() =>
@@ -42,7 +42,7 @@ class _CreateThingModalBottomSheetState
           deadline: _deadlineDateTimeTextController.text.isEmpty
               ? null
               : dateTimeFormatter.parse(_deadlineDateTimeTextController.text),
-          blocThingsId: widget._selectedThingsList.id,
+          blocThingsId: widget._selectedBlocThings.id,
         );
 
         await Provider.of<Things>(context, listen: false)
@@ -51,7 +51,7 @@ class _CreateThingModalBottomSheetState
           final Thing createdThing =
               Provider.of<Things>(context, listen: false).items.last;
           Provider.of<BlocsThings>(context, listen: false).addThingToBlocThings(
-              widget._selectedThingsList.id, createdThing);
+              widget._selectedBlocThings.id, createdThing);
         });
       }
     } catch (error) {

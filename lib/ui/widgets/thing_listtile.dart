@@ -14,12 +14,12 @@ import '../../utils/daybyday_resources.dart';
 import '../../ui/pages/thing_details_page.dart';
 
 class ThingListTile extends StatelessWidget {
-  void _checkuncheck(BuildContext ctx, Thing thing, BlocThings thingsList) {
+  void _checkuncheck(BuildContext ctx, Thing thing, BlocThings blocThings) {
     thing.toggleState();
     Provider.of<Things>(ctx, listen: false)
         .toggleStateThing(thing.id, thing.isChecked)
         .then((value) => Provider.of<BlocsThings>(ctx, listen: false)
-            .updateBlocThingsCheckedCount(thingsList.id));
+            .updateBlocThingsCheckedCount(blocThings.id));
   }
 
   Future<void> _remove(
