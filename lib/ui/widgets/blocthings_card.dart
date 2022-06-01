@@ -21,9 +21,108 @@ class BlocThingsCard extends StatefulWidget {
 }
 
 class _BlocThingsCardState extends State<BlocThingsCard> {
+  Widget _changeBlocThingsTextState(BlocThings blocThings) {
+    if (blocThings.things.length > 0) {
+      return Text(
+        blocThings.checkedCount.toString(),
+        style: TextStyle(
+          fontFamily: DayByDayAppTheme.fontFamilyBigShouldersStencilText,
+          fontSize: 20,
+        ),
+      );
+    } else {
+      return Text(
+        blocThings.things.length == 0
+            ? "_"
+            : blocThings.checkedCount.toString(),
+        style: TextStyle(
+          fontFamily: DayByDayAppTheme.fontFamilyBigShouldersStencilText,
+          fontSize: 20,
+        ),
+      );
+    }
+  }
+
+  Widget _changeBlocThingsIconState(BlocThings blocThings) {
+    if (blocThings.things.length == 0) {
+      return Icon(
+        DayByDayRessources.iconRessourceStatusEmpty,
+        size: 25,
+      );
+    } else if (blocThings.things.length == blocThings.checkedCount) {
+      return Icon(
+        DayByDayRessources.iconRessourceStatusDone,
+        size: 25,
+      );
+    } else {
+      return Icon(
+        DayByDayRessources.iconRessourceStatusInProgress,
+        size: 25,
+      );
+    }
+  }
+
+  String _getTitleSubString(String title) {
+    return title.substring(0, 14) + "...";
+  }
+
+  Future<String> _showAlertDialog(
+      BuildContext context, BlocThings blocThings) async {
+    return await showDialog(
+        context: context,
+        barrierDismissible: false,
+        useRootNavigator: false,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: Text(
+              DayByDayRessources.textRessourceConfirmDeleteThingsListTitle,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: SingleChildScrollView(
+              child: Text(
+                "Vous confirmez la suppression de \"${blocThings.title}\" ?",
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, 'yes');
+                },
+                child: Text(
+                  DayByDayRessources.textRessourceYes,
+                  style: TextStyle(
+                    color: DayByDayAppTheme.accentColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, 'no');
+                },
+                child: Text(
+                  DayByDayRessources.textRessourceNo,
+                  style: TextStyle(
+                    color: DayByDayAppTheme.accentColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final blocThings = Provider.of<BlocThings>(context);
+
     blocThings.things =
         Provider.of<Things>(context).findByBlocThingsId(blocThings.id);
 
@@ -149,105 +248,5 @@ class _BlocThingsCardState extends State<BlocThingsCard> {
         ),
       ),
     );
-  }
-
-  Widget _changeBlocThingsTextState(BlocThings blocThings) {
-    if (blocThings.things.length > 0) {
-      return Text(
-        blocThings.checkedCount.toString(),
-        // thingsList.checkedThingsCount.toString(),
-        style: TextStyle(
-          fontFamily: DayByDayAppTheme.fontFamilyBigShouldersStencilText,
-          fontSize: 20,
-        ),
-      );
-    } else {
-      return Text(
-        blocThings.things.length == 0
-            ? "_"
-            : blocThings.checkedCount.toString(),
-        // : thingsList.checkedThingsCount.toString(),
-        style: TextStyle(
-          fontFamily: DayByDayAppTheme.fontFamilyBigShouldersStencilText,
-          fontSize: 20,
-        ),
-      );
-    }
-  }
-
-  Widget _changeBlocThingsIconState(BlocThings blocThings) {
-    if (blocThings.things.length == 0) {
-      return Icon(
-        DayByDayRessources.iconRessourceStatusEmpty,
-        size: 25,
-      );
-    } else if (blocThings.things.length == blocThings.checkedCount) {
-      return Icon(
-        DayByDayRessources.iconRessourceStatusDone,
-        size: 25,
-      );
-    } else {
-      return Icon(
-        DayByDayRessources.iconRessourceStatusInProgress,
-        size: 25,
-      );
-    }
-  }
-
-  String _getTitleSubString(String title) {
-    return title.substring(0, 14) + "...";
-  }
-
-  Future<String> _showAlertDialog(
-      BuildContext context, BlocThings blocThings) async {
-    return await showDialog(
-        context: context,
-        barrierDismissible: false,
-        useRootNavigator: false,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: Text(
-              DayByDayRessources.textRessourceConfirmDeleteThingsListTitle,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            content: SingleChildScrollView(
-              child: Text(
-                "Vous confirmez la suppression de \"${blocThings.title}\" ?",
-                style: TextStyle(fontSize: 14),
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context, 'yes');
-                },
-                child: Text(
-                  DayByDayRessources.textRessourceYes,
-                  style: TextStyle(
-                    color: DayByDayAppTheme.accentColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context, 'no');
-                },
-                child: Text(
-                  DayByDayRessources.textRessourceNo,
-                  style: TextStyle(
-                    color: DayByDayAppTheme.accentColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          );
-        });
   }
 }

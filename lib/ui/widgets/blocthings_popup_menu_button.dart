@@ -19,67 +19,6 @@ class BlocThingsPopupMenuButton extends StatelessWidget {
     this._updateBlocThingsTitleAppBar,
   );
 
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton(
-      onSelected: (valueItemSelected) async {
-        if (valueItemSelected == 0) {
-          _showModalFormRenameTitleThingsList(context);
-        } else if (valueItemSelected == 3) {
-          final response = await _showAlertDialog(context, _blocThings);
-          if (response == 'yes') {
-            Provider.of<BlocsThings>(context, listen: false)
-                .deleteBlocThings(_blocThings.id)
-                .then((value) => Navigator.of(context).pop());
-          }
-        }
-      },
-      elevation: 3,
-      itemBuilder: (BuildContext context) => [
-        PopupMenuItem(
-          value: 0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                DayByDayRessources.textRessourcePopupMenuButtonRename,
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              Icon(
-                DayByDayRessources.iconRessoureRename,
-                size: 25,
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem(
-          value: 3,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                DayByDayRessources.textRessourcePopupMenuButtonRemove,
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              Icon(
-                DayByDayRessources.iconRessoureRemove,
-                size: 25,
-              ),
-            ],
-          ),
-        ),
-      ],
-      icon: Icon(
-        Icons.more_vert,
-        size: 30,
-      ),
-    );
-  }
-
   void _showModalFormRenameTitleThingsList(BuildContext ctx) {
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -149,5 +88,66 @@ class BlocThingsPopupMenuButton extends StatelessWidget {
             ],
           );
         });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      onSelected: (valueItemSelected) async {
+        if (valueItemSelected == 0) {
+          _showModalFormRenameTitleThingsList(context);
+        } else if (valueItemSelected == 3) {
+          final response = await _showAlertDialog(context, _blocThings);
+          if (response == 'yes') {
+            Provider.of<BlocsThings>(context, listen: false)
+                .deleteBlocThings(_blocThings.id)
+                .then((value) => Navigator.of(context).pop());
+          }
+        }
+      },
+      elevation: 3,
+      itemBuilder: (BuildContext context) => [
+        PopupMenuItem(
+          value: 0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                DayByDayRessources.textRessourcePopupMenuButtonRename,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              Icon(
+                DayByDayRessources.iconRessoureRename,
+                size: 25,
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: 3,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                DayByDayRessources.textRessourcePopupMenuButtonRemove,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              Icon(
+                DayByDayRessources.iconRessoureRemove,
+                size: 25,
+              ),
+            ],
+          ),
+        ),
+      ],
+      icon: Icon(
+        Icons.more_vert,
+        size: 30,
+      ),
+    );
   }
 }

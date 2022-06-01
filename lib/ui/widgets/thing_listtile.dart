@@ -14,12 +14,12 @@ import '../../utils/daybyday_resources.dart';
 import '../../ui/pages/thing_details_page.dart';
 
 class ThingListTile extends StatelessWidget {
-  void _checkuncheck(BuildContext ctx, Thing thing, BlocThings thingsList) {
+  void _checkuncheck(BuildContext ctx, Thing thing, BlocThings blocThings) {
     thing.toggleState();
     Provider.of<Things>(ctx, listen: false)
         .toggleStateThing(thing.id, thing.isChecked)
         .then((value) => Provider.of<BlocsThings>(ctx, listen: false)
-            .updateBlocThingsCheckedCount(thingsList.id));
+            .updateBlocThingsCheckedCount(blocThings.id));
   }
 
   Future<void> _remove(
@@ -95,8 +95,8 @@ class ThingListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final thing = Provider.of<Thing>(context);
-    final thingsList =
+    final Thing thing = Provider.of<Thing>(context);
+    final BlocThings blocThings =
         Provider.of<BlocsThings>(context).findById(thing.blocThingsId);
     final DateFormat dateTimeFormatter = DateFormat('dd/MM/yyyy');
 
@@ -172,7 +172,7 @@ class ThingListTile extends StatelessWidget {
                           color: Colors.black,
                         ),
                   onPressed: () {
-                    _checkuncheck(context, thing, thingsList);
+                    _checkuncheck(context, thing, blocThings);
                   },
                 ),
               ),
@@ -195,7 +195,7 @@ class ThingListTile extends StatelessWidget {
                     color: Colors.redAccent[700],
                   ),
                   onPressed: () {
-                    _remove(context, thing, thingsList);
+                    _remove(context, thing, blocThings);
                   },
                 ),
               ),

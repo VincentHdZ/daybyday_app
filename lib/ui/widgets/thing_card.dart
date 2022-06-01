@@ -22,17 +22,18 @@ class ThingCard extends StatelessWidget {
     return title.length > 50 ? title.substring(0, 50) + "..." : title;
   }
 
-  void _checkuncheck(BuildContext ctx, Thing thing, BlocThings thingsList) {
+  void _checkuncheck(BuildContext ctx, Thing thing, BlocThings blocThings) {
     thing.toggleState();
     Provider.of<Things>(ctx, listen: false)
         .toggleStateThing(thing.id, thing.isChecked)
         .then((value) => Provider.of<BlocsThings>(ctx, listen: false)
-            .updateBlocThingsCheckedCount(thingsList.id));
+            .updateBlocThingsCheckedCount(blocThings.id));
   }
 
   Future<void> _remove(
       BuildContext context, Thing thing, BlocThings blocThings) async {
     final response = await _showAlertDialog(context, thing);
+
     if (response == 'yes') {
       Provider.of<Things>(context, listen: false)
           .revomeThing(thing.id)

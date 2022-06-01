@@ -8,15 +8,14 @@ import 'package:http/http.dart' as http;
 import '../../models/thing.dart';
 
 class Things with ChangeNotifier {
-  List<Thing> _items = [];
-  // UnmodifiableListView<Thing> get items => UnmodifiableListView(_items);
-  List<Thing> get items {
-    return [..._items];
-  }
-
   final String _urlBase = dotenv.env['END_POINT'];
   final String authToken;
   final String userId;
+  List<Thing> _items = [];
+
+  List<Thing> get items {
+    return [..._items];
+  }
 
   Things(this.authToken, this.userId, this._items);
 
@@ -29,6 +28,7 @@ class Things with ChangeNotifier {
       final Map<String, dynamic> dataThings =
           json.decode(response.body) as Map<String, dynamic>;
       final List<Thing> loadedThings = [];
+
       if (dataThings != null) {
         dataThings.forEach((thingId, thingData) {
           loadedThings.add(new Thing(
@@ -43,7 +43,9 @@ class Things with ChangeNotifier {
           ));
         });
       }
+
       _items = loadedThings;
+
       notifyListeners();
     } catch (error) {
       print("Error -- $error");
@@ -80,7 +82,9 @@ class Things with ChangeNotifier {
           deadline: createdThing.deadline,
           isChecked: createdThing.isChecked,
           blocThingsId: createdThing.blocThingsId);
+
       _items.add(addedThing);
+
       notifyListeners();
     } catch (error) {
       print("Error -- $error");
@@ -93,6 +97,7 @@ class Things with ChangeNotifier {
       final String editedThingId = editedThing.id;
       final String url =
           "${_urlBase}things/$editedThingId.json?auth=$authToken";
+
       await http.patch(url,
           body: json.encode({
             'label': editedThing.label,
@@ -102,8 +107,11 @@ class Things with ChangeNotifier {
                 : null,
             'isChecked': editedThing.isChecked,
           }));
+
       final int thingIndex = _items.indexWhere((t) => t.id == editedThing.id);
+
       _items[thingIndex] = editedThing;
+
       notifyListeners();
     } catch (error) {
       print("Error -- $error");
@@ -114,10 +122,12 @@ class Things with ChangeNotifier {
   Future<void> toggleStateThing(String thingId, bool isChecked) async {
     try {
       final String url = "${_urlBase}things/$thingId.json?auth=$authToken";
+
       await http.patch(url,
           body: json.encode({
             'isChecked': isChecked,
           }));
+
       notifyListeners();
     } catch (error) {
       print("Error -- $error");
@@ -128,8 +138,11 @@ class Things with ChangeNotifier {
   Future<void> revomeThing(String thingId) async {
     try {
       final String url = "${_urlBase}things/$thingId.json?auth=$authToken";
+
       await http.delete(url);
+
       _items.removeWhere((thing) => thing.id == thingId);
+
       notifyListeners();
     } catch (error) {
       print("Error -- $error");

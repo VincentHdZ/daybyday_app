@@ -10,6 +10,48 @@ class BlocThingsCounter extends StatelessWidget {
 
   BlocThingsCounter(this.blocThings);
 
+  Widget _changeBlocThingsTextState() {
+    if (blocThings.things.length > 0) {
+      return Text(
+        blocThings.checkedCount.toString(),
+        style: TextStyle(
+          fontFamily: DayByDayAppTheme.fontFamilyBigShouldersStencilText,
+          fontSize: 20,
+        ),
+      );
+    } else {
+      return Text(
+        blocThings.things.length == 0
+            ? "_"
+            : blocThings.checkedCount.toString(),
+        style: TextStyle(
+          fontFamily: DayByDayAppTheme.fontFamilyBigShouldersStencilText,
+          fontSize: 20,
+        ),
+      );
+    }
+  }
+
+  Widget _changeBlocThingsiconState() {
+    if (blocThings.things.length > 0 &&
+        (blocThings.things.length == blocThings.checkedCount)) {
+      return Icon(
+        DayByDayRessources.iconRessourceStatusDone,
+        size: 25,
+      );
+    } else if (blocThings.things.length > 0) {
+      return Icon(
+        DayByDayRessources.iconRessourceStatusInProgress,
+        size: 25,
+      );
+    } else {
+      return Icon(
+        DayByDayRessources.iconRessourceStatusEmpty,
+        size: 25,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -65,49 +107,5 @@ class BlocThingsCounter extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Widget _changeBlocThingsTextState() {
-    if (blocThings.things.length > 0) {
-      return Text(
-        blocThings.checkedCount.toString(),
-        // thingsList.checkedThingsCount.toString(),
-        style: TextStyle(
-          fontFamily: DayByDayAppTheme.fontFamilyBigShouldersStencilText,
-          fontSize: 20,
-        ),
-      );
-    } else {
-      return Text(
-        blocThings.things.length == 0
-            ? "_"
-            : blocThings.checkedCount.toString(),
-            // : thingsList.checkedThingsCount.toString(),
-        style: TextStyle(
-          fontFamily: DayByDayAppTheme.fontFamilyBigShouldersStencilText,
-          fontSize: 20,
-        ),
-      );
-    }
-  }
-
-  Widget _changeBlocThingsiconState() {
-    if (blocThings.things.length > 0 &&
-        (blocThings.things.length == blocThings.checkedCount)) {
-      return Icon(
-        DayByDayRessources.iconRessourceStatusDone,
-        size: 25,
-      );
-    } else if (blocThings.things.length > 0) {
-      return Icon(
-        DayByDayRessources.iconRessourceStatusInProgress,
-        size: 25,
-      );
-    } else {
-      return Icon(
-        DayByDayRessources.iconRessourceStatusEmpty,
-        size: 25,
-      );
-    }
   }
 }

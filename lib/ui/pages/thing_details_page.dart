@@ -32,6 +32,144 @@ class _ThingDetailsPageState extends State<ThingDetailsPage> {
   bool _init = true;
   bool _isLoading = false;
 
+  Future<void> _checkuncheck(BuildContext ctx, Thing thing) async {
+    thing.toggleState();
+
+    Provider.of<Things>(ctx, listen: false)
+        .toggleStateThing(thing.id, thing.isChecked)
+        .then((value) => Provider.of<BlocsThings>(ctx, listen: false)
+            .updateBlocThingsCheckedCount(thing.blocThingsId));
+  }
+
+  Future<void> _remove(
+      BuildContext context, Thing thing, BlocThings blocThings) async {
+    final response = await _showAlertDialog(context, thing);
+
+    if (response == 'yes') {
+      try {
+        Provider.of<Things>(context, listen: false)
+            .revomeThing(thing.id)
+            .then((_) => {
+                  Provider.of<BlocsThings>(context, listen: false)
+                      .removeThingFromBlocThings(blocThings.id, thing.id)
+                })
+            .then((value) => {
+                  Provider.of<BlocsThings>(context, listen: false)
+                      .updateBlocThingsCheckedCount(blocThings.id)
+                });
+      } catch (error) {
+        throw error;
+      } finally {
+        Navigator.of(context).pop();
+      }
+    }
+  }
+
+  Future<String> _showAlertDialog(
+      BuildContext context, Thing selectedThing) async {
+    return await showDialog(
+        context: context,
+        barrierDismissible: false,
+        useRootNavigator: false,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: Text(
+              DayByDayRessources.textRessourceConfirmDeleteThingTitle,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: SingleChildScrollView(
+              child: Text(
+                "Vous confirmez la suppression de \"${selectedThing.label}\" ?",
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, 'yes');
+                },
+                child: Text(
+                  DayByDayRessources.textRessourceYes,
+                  style: TextStyle(
+                    color: DayByDayAppTheme.accentColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, 'no');
+                },
+                child: Text(
+                  DayByDayRessources.textRessourceNo,
+                  style: TextStyle(
+                    color: DayByDayAppTheme.accentColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<void> _saveForm() async {
+    try {
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        _setStateCircularProgressIndicator(true);
+        _selectedThing.deadline = _deadlineDateTimeTextController.text != ""
+            ? _dateTimeFormatter.parse(_deadlineDateTimeTextController.text)
+            : null;
+        await Provider.of<Things>(context, listen: false)
+            .updateThing(_selectedThing);
+
+        BlocThings blocThings = Provider.of<BlocsThings>(context, listen: false)
+            .findById(_selectedThing.blocThingsId);
+        final thingIndex = blocThings.things
+            .indexWhere((element) => element.id == _selectedThing.id);
+        blocThings.things[thingIndex] = _selectedThing;
+      }
+    } catch (error) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(
+              DayByDayRessources.textRessourceAlertDialogTitleErrorMessage),
+          content: Text(
+              DayByDayRessources.textRessourceAlertDialogContentErrorMessage),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: DayByDayAppTheme.accentColor,
+              ),
+              child: Text(DayByDayRessources.textRessourceOk),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    } finally {
+      if (_isLoading) {
+        _setStateCircularProgressIndicator(false);
+        Navigator.of(context).pop();
+      }
+    }
+  }
+
+  void _setStateCircularProgressIndicator(bool isLoading) {
+    setState(() {
+      _isLoading = isLoading;
+    });
+  }
+
   @override
   void didChangeDependencies() {
     if (_init) {
@@ -202,143 +340,5 @@ class _ThingDetailsPageState extends State<ThingDetailsPage> {
               ),
             ),
     );
-  }
-
-  Future<void> _checkuncheck(BuildContext ctx, Thing thing) async {
-    thing.toggleState();
-
-    Provider.of<Things>(ctx, listen: false)
-        .toggleStateThing(thing.id, thing.isChecked)
-        .then((value) => Provider.of<BlocsThings>(ctx, listen: false)
-            .updateBlocThingsCheckedCount(thing.blocThingsId));
-  }
-
-  Future<void> _remove(
-      BuildContext context, Thing thing, BlocThings blocThings) async {
-    final response = await _showAlertDialog(context, thing);
-
-    if (response == 'yes') {
-      try {
-        Provider.of<Things>(context, listen: false)
-            .revomeThing(thing.id)
-            .then((_) => {
-                  Provider.of<BlocsThings>(context, listen: false)
-                      .removeThingFromBlocThings(blocThings.id, thing.id)
-                })
-            .then((value) => {
-                  Provider.of<BlocsThings>(context, listen: false)
-                      .updateBlocThingsCheckedCount(blocThings.id)
-                });
-      } catch (error) {
-        throw error;
-      } finally {
-        Navigator.of(context).pop();
-      }
-    }
-  }
-
-  Future<String> _showAlertDialog(
-      BuildContext context, Thing selectedThing) async {
-    return await showDialog(
-        context: context,
-        barrierDismissible: false,
-        useRootNavigator: false,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: Text(
-              DayByDayRessources.textRessourceConfirmDeleteThingTitle,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            content: SingleChildScrollView(
-              child: Text(
-                "Vous confirmez la suppression de \"${selectedThing.label}\" ?",
-                style: TextStyle(fontSize: 14),
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context, 'yes');
-                },
-                child: Text(
-                  DayByDayRessources.textRessourceYes,
-                  style: TextStyle(
-                    color: DayByDayAppTheme.accentColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context, 'no');
-                },
-                child: Text(
-                  DayByDayRessources.textRessourceNo,
-                  style: TextStyle(
-                    color: DayByDayAppTheme.accentColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          );
-        });
-  }
-
-  Future<void> _saveForm() async {
-    try {
-      if (_formKey.currentState.validate()) {
-        _formKey.currentState.save();
-        _setStateCircularProgressIndicator(true);
-        _selectedThing.deadline = _deadlineDateTimeTextController.text != ""
-            ? _dateTimeFormatter.parse(_deadlineDateTimeTextController.text)
-            : null;
-        await Provider.of<Things>(context, listen: false)
-            .updateThing(_selectedThing);
-
-        BlocThings blocThings = Provider.of<BlocsThings>(context, listen: false)
-            .findById(_selectedThing.blocThingsId);
-        final thingIndex = blocThings.things
-            .indexWhere((element) => element.id == _selectedThing.id);
-        blocThings.things[thingIndex] = _selectedThing;
-      }
-    } catch (error) {
-      await showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text(
-              DayByDayRessources.textRessourceAlertDialogTitleErrorMessage),
-          content: Text(
-              DayByDayRessources.textRessourceAlertDialogContentErrorMessage),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: DayByDayAppTheme.accentColor,
-              ),
-              child: Text(DayByDayRessources.textRessourceOk),
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-            )
-          ],
-        ),
-      );
-    } finally {
-      if (_isLoading) {
-        _setStateCircularProgressIndicator(false);
-        Navigator.of(context).pop();
-      }
-    }
-  }
-
-  void _setStateCircularProgressIndicator(bool isLoading) {
-    setState(() {
-      _isLoading = isLoading;
-    });
   }
 }

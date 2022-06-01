@@ -14,9 +14,9 @@ import '../../utils/daybyday_resources.dart';
 import 'datepicker_formfield.dart';
 
 class CreateThingModalBottomSheet extends StatefulWidget {
-  final BlocThings _selectedThingsList;
+  final BlocThings _selectedBlocThings;
 
-  CreateThingModalBottomSheet(this._selectedThingsList);
+  CreateThingModalBottomSheet(this._selectedBlocThings);
 
   @override
   _CreateThingModalBottomSheetState createState() =>
@@ -25,9 +25,9 @@ class CreateThingModalBottomSheet extends StatefulWidget {
 
 class _CreateThingModalBottomSheetState
     extends State<CreateThingModalBottomSheet> {
-  final _formKey = GlobalKey<FormState>();
-  final _labelThingTextController = new TextEditingController();
-  final _deadlineDateTimeTextController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _labelThingTextController = new TextEditingController();
+  final TextEditingController _deadlineDateTimeTextController = TextEditingController();
   bool _isLoading = false;
 
   Future<void> _saveForm() async {
@@ -37,12 +37,12 @@ class _CreateThingModalBottomSheetState
         _setStateCircularProgressIndicator(true);
 
         final DateFormat dateTimeFormatter = DateFormat('dd/MM/yyyy');
-        final newThing = new Thing(
+        final Thing newThing = new Thing(
           label: _labelThingTextController.text,
           deadline: _deadlineDateTimeTextController.text.isEmpty
               ? null
               : dateTimeFormatter.parse(_deadlineDateTimeTextController.text),
-          blocThingsId: widget._selectedThingsList.id,
+          blocThingsId: widget._selectedBlocThings.id,
         );
 
         await Provider.of<Things>(context, listen: false)
@@ -51,7 +51,7 @@ class _CreateThingModalBottomSheetState
           final Thing createdThing =
               Provider.of<Things>(context, listen: false).items.last;
           Provider.of<BlocsThings>(context, listen: false).addThingToBlocThings(
-              widget._selectedThingsList.id, createdThing);
+              widget._selectedBlocThings.id, createdThing);
         });
       }
     } catch (error) {
