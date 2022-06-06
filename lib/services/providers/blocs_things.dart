@@ -36,13 +36,23 @@ class BlocsThings with ChangeNotifier {
 
       if (dataBlocsThings != null) {
         dataBlocsThings.forEach((blocThingsId, blocThingsData) {
+          final dataThings = blocThingsData['things'] as Map<String, dynamic>;
+          final List<Thing> thingsConverted = [];
+
+          if (dataThings != null) {
+            dataThings.forEach((key, thingData) {
+              thingsConverted.add(
+                  new Thing(id: thingData['id'], label: thingData['label']));
+            });
+          }
+
           BlocThings blocThingsConverted = new BlocThings(
             id: blocThingsId,
             title: blocThingsData['title'],
             checkedCount: blocThingsData['checkedCount'],
             state: Status.values.firstWhere((element) =>
                 element.toString().split('.')[1] == blocThingsData['state']),
-            things: [],
+            things: thingsConverted.length > 0 ? thingsConverted : [],
           );
 
           loadedBlocsThings.add(blocThingsConverted);

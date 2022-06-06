@@ -44,8 +44,8 @@ class _ThingsOverviewPageState extends State<ThingsOverviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<BlocThings> blocsThings = Provider.of<BlocsThings>(context).items;
-    List<Thing> allThings = [];
+    final List<BlocThings> blocsThings = Provider.of<BlocsThings>(context).items;
+    final List<Thing> allThings = [];
 
     blocsThings.forEach((bloc) {
       bloc.things = Provider.of<Things>(context)
